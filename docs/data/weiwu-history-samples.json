@@ -1,7 +1,7 @@
 {
   "project": "weiwu-content-warroom",
   "account": "唯吾",
-  "exported_at": "2026-06-23T15:03:26",
+  "exported_at": "2026-06-23T15:09:57",
   "sample_policy": "historical anchors only; not blind predictions; safe for T+3 reference",
   "data_source": {
     "primary": "F2 Douyin crawler with local Chrome login cookie",
@@ -19,14 +19,14 @@
     "missing_works_count": 1
   },
   "performance_summary": {
-    "total_views": 68659,
+    "total_views": 68676,
     "total_likes": 1726,
     "total_comments": 29,
     "total_saves": 1059,
     "total_shares": 432,
-    "avg_views": 5281,
+    "avg_views": 5283,
     "median_views": 1648,
-    "best_views": 24838
+    "best_views": 24840
   },
   "samples": [
     {
@@ -41,7 +41,7 @@
       "theme_category": "工地/开工服务",
       "content_angle": "问题拆解/方法论",
       "metrics": {
-        "views": 1037,
+        "views": 1038,
         "likes": 21,
         "comments": 0,
         "saves": 15,
@@ -91,7 +91,7 @@
       "theme_category": "工地/开工服务",
       "content_angle": "问题拆解/方法论",
       "metrics": {
-        "views": 10398,
+        "views": 10407,
         "likes": 170,
         "comments": 0,
         "saves": 157,
@@ -116,7 +116,7 @@
       "theme_category": "工地/开工服务",
       "content_angle": "问题拆解/方法论",
       "metrics": {
-        "views": 12027,
+        "views": 12030,
         "likes": 304,
         "comments": 1,
         "saves": 190,
@@ -166,7 +166,7 @@
       "theme_category": "装企IP运营",
       "content_angle": "第一视角现场教学",
       "metrics": {
-        "views": 717,
+        "views": 718,
         "likes": 100,
         "comments": 5,
         "saves": 10,
@@ -241,7 +241,7 @@
       "theme_category": "案例/设计拆解",
       "content_angle": "第一视角现场教学",
       "metrics": {
-        "views": 10320,
+        "views": 10321,
         "likes": 243,
         "comments": 4,
         "saves": 160,
@@ -266,7 +266,7 @@
       "theme_category": "案例/设计拆解",
       "content_angle": "第一视角现场教学",
       "metrics": {
-        "views": 24838,
+        "views": 24840,
         "likes": 551,
         "comments": 9,
         "saves": 443,

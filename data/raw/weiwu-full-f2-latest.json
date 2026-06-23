@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-23T15:03:26",
+  "generated_at": "2026-06-23T15:09:57",
   "source": "f2_douyin_with_chrome_cookie",
   "request": {
     "start": "2020-01-01",
@@ -43,9 +43,9 @@
         "comment_count": 0,
         "collect_count": 15,
         "share_count": 6,
-        "play_count": 1037,
+        "play_count": 1038,
         "engagement_score": 63,
-        "ranking_score": 1037,
+        "ranking_score": 1038,
         "ranking_basis": "play_count"
       },
       {
@@ -73,9 +73,9 @@
         "comment_count": 0,
         "collect_count": 157,
         "share_count": 63,
-        "play_count": 10398,
+        "play_count": 10407,
         "engagement_score": 610,
-        "ranking_score": 10398,
+        "ranking_score": 10407,
         "ranking_basis": "play_count"
       },
       {
@@ -88,9 +88,9 @@
         "comment_count": 1,
         "collect_count": 190,
         "share_count": 92,
-        "play_count": 12027,
+        "play_count": 12030,
         "engagement_score": 871,
-        "ranking_score": 12027,
+        "ranking_score": 12030,
         "ranking_basis": "play_count"
       },
       {
@@ -118,9 +118,9 @@
         "comment_count": 5,
         "collect_count": 10,
         "share_count": 9,
-        "play_count": 717,
+        "play_count": 718,
         "engagement_score": 153,
-        "ranking_score": 717,
+        "ranking_score": 718,
         "ranking_basis": "play_count"
       },
       {
@@ -163,9 +163,9 @@
         "comment_count": 4,
         "collect_count": 160,
         "share_count": 57,
-        "play_count": 10320,
+        "play_count": 10321,
         "engagement_score": 689,
-        "ranking_score": 10320,
+        "ranking_score": 10321,
         "ranking_basis": "play_count"
       },
       {
@@ -178,9 +178,9 @@
         "comment_count": 9,
         "collect_count": 443,
         "share_count": 166,
-        "play_count": 24838,
+        "play_count": 24840,
         "engagement_score": 1796,
-        "ranking_score": 24838,
+        "ranking_score": 24840,
         "ranking_basis": "play_count"
       },
       {
