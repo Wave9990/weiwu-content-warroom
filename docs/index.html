@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>唯吾内容作战台 · 内容预测与增长驾驶舱</title>
+  <title>唯吾内容作战台 · V0.4 样本驱动预测</title>
   <style>
     :root {
       --bg: #f4efe6;
@@ -479,7 +479,7 @@
 <body>
   <main class="wrap">
     <nav class="nav">
-      <div class="brand"><div class="mark">吾</div><div>唯吾内容作战台 V0.2</div></div>
+      <div class="brand"><div class="mark">吾</div><div>唯吾内容作战台 V0.4</div></div>
       <div class="nav-links">
         <a href="#predict">内容预测</a>
         <a href="#warroom">内容作战台</a>
@@ -536,7 +536,7 @@
             <button onclick="runPrediction()">生成预测结果</button>
             <button class="secondary" onclick="loadExample()">填入示例稿</button>
           </div>
-          <div class="note">重要边界：历史已发布内容只能做 anchor，不能补写盲预测。真正可校准的预测，必须在发布前生成并锁定。</div>
+          <div class="note" id="sampleSourceNote">重要边界：历史已发布内容只能做 anchor，不能补写盲预测。真正可校准的预测，必须在发布前生成并锁定。当前正在加载历史样本...</div>
         </div>
 
         <div class="card result-panel">
@@ -688,6 +688,7 @@
 
   <script>
     const draft = document.getElementById('draft');
+    let historicalAnchors = [];
 
     function clamp(num, min, max) {
       return Math.max(min, Math.min(max, num));
@@ -695,18 +696,45 @@
 
     function estimateText(text) {
       const length = text.trim().length;
-      const hasPain = /痛|客户|价格|信任|获客|成交|老板|设计师|销售|咨询/.test(text);
-      const hasProof = /案例|数据|产值|签单|1\.5亿|500万|真实|客户/.test(text);
-      const hasConflict = /不是|而是|最大的问题|别再|停掉|误区|不等于/.test(text);
-      const hasAction = /怎么|三步|方法|建议|自查|复盘|定位/.test(text);
+      const hasPain = /痛|客户|价格|信任|获客|成交|老板|设计师|销售|咨询|同行|担心/.test(text);
+      const hasProof = /案例|数据|产值|签单|1\.5亿|500万|真实|客户|业主|开工|成品/.test(text);
+      const hasConflict = /不是|而是|最大的问题|别再|停掉|误区|不等于|同行/.test(text);
+      const hasAction = /怎么|三步|方法|建议|自查|复盘|定位|问题|步骤|标准化/.test(text);
+      const matchedAnchor = findBestAnchor(text);
       const base = clamp(45 + Math.floor(length / 18), 45, 82);
-      const score = clamp(base + (hasPain ? 8 : 0) + (hasProof ? 7 : 0) + (hasConflict ? 6 : 0) + (hasAction ? 4 : 0), 50, 96);
-      const viewsLow = Math.round((score * 180 + length * 2) / 100) * 100;
-      const viewsHigh = Math.round((viewsLow * (2.2 + score / 100)) / 100) * 100;
-      const likesLow = Math.round(viewsLow * 0.012);
-      const likesHigh = Math.round(viewsHigh * 0.025);
-      const viral = clamp(Math.round((score - 55) * 1.35), 8, 68);
-      return { score, viewsLow, viewsHigh, likesLow, likesHigh, viral, hasPain, hasProof, hasConflict, hasAction };
+      const anchorBoost = matchedAnchor ? Math.round(matchedAnchor.similarity * 10) : 0;
+      const score = clamp(base + (hasPain ? 8 : 0) + (hasProof ? 7 : 0) + (hasConflict ? 6 : 0) + (hasAction ? 4 : 0) + anchorBoost, 50, 96);
+      const anchorViews = matchedAnchor?.sample?.t3_metrics?.views || 24000;
+      const anchorLikes = matchedAnchor?.sample?.t3_metrics?.likes || 320;
+      const anchorLeads = matchedAnchor?.sample?.t3_metrics?.leads_or_inquiries ?? null;
+      const anchorMultiplier = matchedAnchor ? clamp(0.72 + matchedAnchor.similarity * 0.85, 0.72, 1.45) : 1;
+      const viewsMid = Math.round(anchorViews * anchorMultiplier * (score / 78));
+      const viewsLow = Math.max(1200, Math.round(viewsMid * 0.58 / 100) * 100);
+      const viewsHigh = Math.max(viewsLow + 900, Math.round(viewsMid * 1.72 / 100) * 100);
+      const likeRate = anchorViews ? anchorLikes / anchorViews : 0.018;
+      const likesLow = Math.max(20, Math.round(viewsLow * likeRate * 0.8));
+      const likesHigh = Math.max(likesLow + 60, Math.round(viewsHigh * likeRate * 1.18));
+      const viral = clamp(Math.round((score - 55) * 1.25 + (matchedAnchor ? matchedAnchor.similarity * 9 : 0)), 8, 72);
+      return { score, viewsLow, viewsHigh, likesLow, likesHigh, viral, hasPain, hasProof, hasConflict, hasAction, matchedAnchor, anchorLeads };
+    }
+
+    function tokenize(text) {
+      const keywords = ['开工', '成品', '案例', '老板', '装修公司', '设计师', '业主', '同行', '拍摄', '第一视角', '无脚本', '咨询', '痛点', '工地', '方法', '采访', '亮点', '客户', '信任', '成交'];
+      return keywords.filter((word) => text.includes(word));
+    }
+
+    function findBestAnchor(text) {
+      if (!historicalAnchors.length) return null;
+      const tokens = tokenize(text);
+      let best = null;
+      historicalAnchors.forEach((sample) => {
+        const sampleText = `${sample.title} ${sample.transcript} ${sample.notes || ''}`;
+        const sampleTokens = tokenize(sampleText);
+        const overlap = tokens.filter((token) => sampleTokens.includes(token));
+        const similarity = tokens.length ? overlap.length / tokens.length : 0;
+        if (!best || similarity > best.similarity) best = { sample, similarity, overlap };
+      });
+      return best && best.similarity > 0 ? best : null;
     }
 
     function runPrediction() {
@@ -721,7 +749,10 @@
         : result.score >= 70
           ? '这条适合作为稳定获客内容，不一定爆，但能帮助目标客户理解唯吾的价值。关键是开头要更具体。'
           : '这条目前偏概念，需要补充具体客户场景、真实案例或更强冲突，否则容易变成普通知识分享。';
-      document.getElementById('judgement').textContent = judgement;
+      const anchorText = result.matchedAnchor
+        ? `参考历史 anchor：《${result.matchedAnchor.sample.title.slice(0, 22)}...》，匹配词：${result.matchedAnchor.overlap.join('、') || '弱匹配'}。`
+        : '当前没有命中历史 anchor，只按文本结构做粗估。';
+      document.getElementById('judgement').textContent = `${judgement} ${anchorText}`;
 
       document.getElementById('hookPill').textContent = `开头冲突：${result.hasConflict ? '强' : '偏弱'}`;
       document.getElementById('proofPill').textContent = `案例证据：${result.hasProof ? '有支撑' : '待补'}`;
@@ -733,7 +764,7 @@
         : '建议补一个真实业务锚点：比如咨询、到店、签单、施工进场或产值数据。没有证据时，预测会偏不稳定。';
 
       document.getElementById('businessFit').textContent = result.hasPain
-        ? '匹配“精准痛点 → 信任建立 → 咨询转化”链路。结尾建议引导客户做账号诊断，而不是泛泛关注。'
+        ? `匹配“精准痛点 → 信任建立 → 咨询转化”链路。${result.anchorLeads !== null ? `相近历史样本 T+3 咨询为 ${result.anchorLeads} 个，` : ''}结尾建议引导客户做账号诊断，而不是泛泛关注。`
         : '当前与变现链路连接偏弱。需要明确这条内容最终想引导客户进入哪一步：诊断、咨询、训练营还是陪跑服务。';
     }
 
@@ -898,8 +929,25 @@
       return String(value).replace(/[&<>'"]/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' })[char]);
     }
 
+    async function loadHistoricalAnchors() {
+      try {
+        const response = await fetch('data/samples.json', { cache: 'no-store' });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const payload = await response.json();
+        historicalAnchors = payload.samples || [];
+        const note = document.getElementById('sampleSourceNote');
+        if (note) note.textContent = `重要边界：已接入 ${historicalAnchors.length} 条唯吾历史 anchor。它们只用于参考相似样本和 T+3 表现，不会被算作发布前盲预测校准样本。`;
+        runPrediction();
+      } catch (error) {
+        const note = document.getElementById('sampleSourceNote');
+        if (note) note.textContent = `重要边界：历史样本加载失败，当前退回文本结构粗估。错误：${error.message}`;
+        runPrediction();
+      }
+    }
+
     loadExample();
     renderSamples();
+    loadHistoricalAnchors();
   </script>
 </body>
 </html>
