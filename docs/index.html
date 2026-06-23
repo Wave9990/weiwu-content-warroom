@@ -397,8 +397,70 @@
       line-height: 1.7;
     }
 
+    .sample-loop {
+      display: grid;
+      grid-template-columns: .95fr 1.05fr;
+      gap: 20px;
+    }
+
+    .sample-form, .sample-list {
+      padding: 24px;
+    }
+
+    .sample-form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .sample-form textarea {
+      min-height: 150px;
+      margin-bottom: 12px;
+    }
+
+    .sample-card {
+      padding: 16px;
+      border: 2px solid var(--line);
+      border-radius: 18px;
+      background: #fffdf7;
+      box-shadow: 3px 3px 0 rgba(22,32,42,.16);
+      margin-bottom: 12px;
+    }
+
+    .sample-card h3 {
+      margin: 0 0 8px;
+      font-size: 18px;
+    }
+
+    .sample-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 10px 0;
+    }
+
+    .sample-empty {
+      padding: 24px;
+      border: 2px dashed rgba(22,32,42,.32);
+      border-radius: 18px;
+      color: var(--muted);
+      line-height: 1.7;
+      background: rgba(255,255,255,.4);
+    }
+
+    .sample-json {
+      width: 100%;
+      min-height: 180px;
+      margin-top: 12px;
+      font-size: 13px;
+      white-space: pre-wrap;
+    }
+
+    .danger-text { color: var(--red); font-weight: 900; }
+
     @media (max-width: 1060px) {
-      .hero, .predictor, .warroom-grid { grid-template-columns: 1fr; }
+      .hero, .predictor, .warroom-grid, .sample-loop { grid-template-columns: 1fr; }
       .business-strip { grid-template-columns: repeat(2, 1fr); }
       .lane { grid-template-columns: 1fr; }
     }
@@ -422,6 +484,7 @@
         <a href="#predict">内容预测</a>
         <a href="#warroom">内容作战台</a>
         <a href="#business">变现链路</a>
+        <a href="#samples">样本回填</a>
         <a href="#usage">怎么用</a>
       </div>
     </nav>
@@ -564,8 +627,62 @@
       </div>
     </section>
 
+    <section id="samples">
+      <div class="section-title">
+        <h2>历史样本闭环</h2>
+        <p>这就是你问的“3 条已发布内容 + T+3 回填数据”怎么给我：直接在这里录入，浏览器会本地保存，最后导出 JSON 发给我。注意：这些是 historical anchor，不会伪装成发布前盲预测。</p>
+      </div>
+      <div class="sample-loop">
+        <div class="card sample-form">
+          <div class="field-label"><span>录入一条已发布内容</span><span class="pill red">历史样本</span></div>
+          <div class="sample-form-grid">
+            <input id="sampleTitle" placeholder="标题 / 选题名" />
+            <input id="sampleUrl" placeholder="发布链接，可先留空" />
+            <input id="sampleDate" type="date" />
+            <select id="samplePlatform">
+              <option value="douyin">抖音</option>
+              <option value="xiaohongshu">小红书</option>
+              <option value="shipinhao">视频号</option>
+              <option value="other">其他</option>
+            </select>
+          </div>
+          <textarea id="sampleTranscript" placeholder="粘贴这条已发布内容的逐字稿 / 口播稿。没有完整逐字稿也可以先填核心内容。"></textarea>
+          <div class="sample-form-grid">
+            <input id="sampleViews" type="number" min="0" placeholder="T+3 播放量" />
+            <input id="sampleLikes" type="number" min="0" placeholder="T+3 点赞" />
+            <input id="sampleComments" type="number" min="0" placeholder="T+3 评论" />
+            <input id="sampleShares" type="number" min="0" placeholder="T+3 转发/收藏" />
+            <input id="sampleLeads" type="number" min="0" placeholder="T+3 私信/咨询" />
+            <select id="sampleConversion">
+              <option value="unknown">是否进入成交链路：未知</option>
+              <option value="none">未进入</option>
+              <option value="lead">有有效咨询</option>
+              <option value="deal">已关联成交/产值</option>
+            </select>
+          </div>
+          <textarea id="sampleNotes" placeholder="备注：这条为什么表现好/差？有没有客户咨询、评论关键词、成交线索？"></textarea>
+          <div class="btn-row">
+            <button onclick="saveSample()">保存这条样本</button>
+            <button class="secondary" onclick="fillSampleExample()">填入示例</button>
+            <button class="secondary" onclick="clearSampleForm()">清空表单</button>
+          </div>
+          <div class="note"><span class="danger-text">隐私提醒：</span>不要填客户手机号、微信号、合同号、客户真实姓名。只填内容表现和脱敏成交链路。</div>
+        </div>
+        <div class="card sample-list">
+          <div class="field-label"><span>已保存样本</span><span class="pill yellow" id="sampleCounter">0 / 3</span></div>
+          <div id="sampleList" class="sample-empty">还没有录入样本。建议先补 3 条：一条播放好、一条咨询好、一条表现一般但有代表性。</div>
+          <div class="btn-row">
+            <button onclick="exportSamples()">导出 JSON 给艾玛斯</button>
+            <button class="secondary" onclick="copySamplesJson()">复制 JSON</button>
+            <button class="secondary" onclick="resetSamples()">清空本机样本</button>
+          </div>
+          <textarea id="samplesJson" class="sample-json" readonly placeholder="导出的 JSON 会显示在这里。"></textarea>
+        </div>
+      </div>
+    </section>
+
     <section class="footer" id="usage">
-      <strong>怎么用：</strong>第一步，把明天想拍的终稿粘到“内容预测”里，点生成预测；第二步，发布后把播放、点赞、评论、私信、咨询、成交线索回填到作战台；第三步，每周看“推荐动作”，决定下周做痛点、案例、方法论还是转化内容。当前版本是前端可用 mock，下一版会接入真实样本数据和 cheat-on-content 预测记录。
+      <strong>怎么用：</strong>第一步，把明天想拍的终稿粘到“内容预测”里，点生成预测；第二步，在“历史样本闭环”里录入 3 条已发布内容和 T+3 数据，导出 JSON 发给艾玛斯；第三步，后续发布前先预测，发布后 T+3 回填，逐步把 mock 预测变成真实校准循环。当前版本数据保存在你的浏览器本地，不会自动上传。
     </section>
   </main>
 
@@ -630,7 +747,159 @@
       runPrediction();
     }
 
+    function fillSampleExample() {
+      document.getElementById('sampleTitle').value = '有播放不等于有客户';
+      document.getElementById('sampleUrl').value = 'https://example.com/weiwu-video';
+      document.getElementById('sampleDate').valueAsDate = new Date();
+      document.getElementById('samplePlatform').value = 'douyin';
+      document.getElementById('sampleTranscript').value = '很多装修老板以为做个人 IP 就是把视频拍火，但真正能带来客户的内容，不一定是播放最高的，而是最能筛选精准客户的。';
+      document.getElementById('sampleViews').value = 12800;
+      document.getElementById('sampleLikes').value = 386;
+      document.getElementById('sampleComments').value = 42;
+      document.getElementById('sampleShares').value = 61;
+      document.getElementById('sampleLeads').value = 3;
+      document.getElementById('sampleConversion').value = 'lead';
+      document.getElementById('sampleNotes').value = '评论区有装修老板问账号定位，适合沉淀为精准获客类 anchor。';
+    }
+
+    function getSamples() {
+      try {
+        return JSON.parse(localStorage.getItem('weiwuHistoricalSamples') || '[]');
+      } catch (error) {
+        return [];
+      }
+    }
+
+    function setSamples(samples) {
+      localStorage.setItem('weiwuHistoricalSamples', JSON.stringify(samples));
+      renderSamples();
+    }
+
+    function numberValue(id) {
+      const value = document.getElementById(id).value;
+      return value === '' ? null : Number(value);
+    }
+
+    function saveSample() {
+      const title = document.getElementById('sampleTitle').value.trim();
+      const transcript = document.getElementById('sampleTranscript').value.trim();
+      if (!title || !transcript) {
+        alert('先填标题和逐字稿/核心内容，再保存。');
+        return;
+      }
+
+      const sample = {
+        id: `historical-${Date.now()}`,
+        type: 'historical_anchor_not_blind_prediction',
+        title,
+        url: document.getElementById('sampleUrl').value.trim(),
+        published_at: document.getElementById('sampleDate').value || null,
+        platform: document.getElementById('samplePlatform').value,
+        transcript,
+        t3_metrics: {
+          views: numberValue('sampleViews'),
+          likes: numberValue('sampleLikes'),
+          comments: numberValue('sampleComments'),
+          shares_or_saves: numberValue('sampleShares'),
+          leads_or_inquiries: numberValue('sampleLeads'),
+          conversion_status: document.getElementById('sampleConversion').value
+        },
+        notes: document.getElementById('sampleNotes').value.trim(),
+        privacy: 'desensitized_only',
+        created_at: new Date().toISOString()
+      };
+
+      const samples = getSamples();
+      samples.unshift(sample);
+      setSamples(samples);
+      clearSampleForm();
+      exportSamples(false);
+    }
+
+    function clearSampleForm() {
+      ['sampleTitle', 'sampleUrl', 'sampleDate', 'sampleTranscript', 'sampleViews', 'sampleLikes', 'sampleComments', 'sampleShares', 'sampleLeads', 'sampleNotes'].forEach((id) => {
+        document.getElementById(id).value = '';
+      });
+      document.getElementById('samplePlatform').value = 'douyin';
+      document.getElementById('sampleConversion').value = 'unknown';
+    }
+
+    function renderSamples() {
+      const samples = getSamples();
+      const list = document.getElementById('sampleList');
+      const counter = document.getElementById('sampleCounter');
+      counter.textContent = `${samples.length} / 3`;
+      if (!samples.length) {
+        list.className = 'sample-empty';
+        list.innerHTML = '还没有录入样本。建议先补 3 条：一条播放好、一条咨询好、一条表现一般但有代表性。';
+        return;
+      }
+
+      list.className = '';
+      list.innerHTML = samples.map((sample, index) => `
+        <article class="sample-card">
+          <h3>${index + 1}. ${escapeHtml(sample.title)}</h3>
+          <div class="sample-meta">
+            <span class="pill yellow">${platformLabel(sample.platform)}</span>
+            <span class="pill blue">T+3 播放 ${displayMetric(sample.t3_metrics.views)}</span>
+            <span class="pill green">咨询 ${displayMetric(sample.t3_metrics.leads_or_inquiries)}</span>
+            <span class="pill red">${conversionLabel(sample.t3_metrics.conversion_status)}</span>
+          </div>
+          <p>${escapeHtml(sample.transcript).slice(0, 120)}${sample.transcript.length > 120 ? '…' : ''}</p>
+        </article>
+      `).join('');
+    }
+
+    function exportSamples(showAlert = true) {
+      const payload = {
+        project: 'weiwu-content-warroom',
+        account: '唯吾',
+        exported_at: new Date().toISOString(),
+        sample_policy: 'historical anchors only; not blind predictions; safe for T+3 reference',
+        samples: getSamples()
+      };
+      const json = JSON.stringify(payload, null, 2);
+      document.getElementById('samplesJson').value = json;
+      if (showAlert) alert('JSON 已生成。你可以复制后直接发给艾玛斯。');
+      return json;
+    }
+
+    async function copySamplesJson() {
+      const json = exportSamples(false);
+      try {
+        await navigator.clipboard.writeText(json);
+        alert('已复制 JSON，可以直接粘贴发给艾玛斯。');
+      } catch (error) {
+        document.getElementById('samplesJson').select();
+        alert('浏览器不允许自动复制，请手动复制下方 JSON。');
+      }
+    }
+
+    function resetSamples() {
+      if (!confirm('确定清空这个浏览器里保存的历史样本吗？')) return;
+      localStorage.removeItem('weiwuHistoricalSamples');
+      document.getElementById('samplesJson').value = '';
+      renderSamples();
+    }
+
+    function displayMetric(value) {
+      return value === null || Number.isNaN(value) ? '未填' : value;
+    }
+
+    function platformLabel(platform) {
+      return ({ douyin: '抖音', xiaohongshu: '小红书', shipinhao: '视频号', other: '其他' })[platform] || platform;
+    }
+
+    function conversionLabel(status) {
+      return ({ unknown: '转化未知', none: '未进入成交链路', lead: '有有效咨询', deal: '已关联成交/产值' })[status] || status;
+    }
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>'"]/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' })[char]);
+    }
+
     loadExample();
+    renderSamples();
   </script>
 </body>
 </html>
