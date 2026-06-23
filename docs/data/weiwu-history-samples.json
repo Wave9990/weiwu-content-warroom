@@ -1,7 +1,7 @@
 {
   "project": "weiwu-content-warroom",
   "account": "唯吾",
-  "exported_at": "2026-06-23T14:45:37",
+  "exported_at": "2026-06-23T15:03:26",
   "sample_policy": "historical anchors only; not blind predictions; safe for T+3 reference",
   "data_source": {
     "primary": "F2 Douyin crawler with local Chrome login cookie",
@@ -14,19 +14,19 @@
     "follower_count": 406,
     "following_count": 17,
     "aweme_count": 14,
-    "total_favorited": 1795,
+    "total_favorited": 1796,
     "captured_works": 13,
     "missing_works_count": 1
   },
   "performance_summary": {
-    "total_views": 68606,
-    "total_likes": 1725,
+    "total_views": 68659,
+    "total_likes": 1726,
     "total_comments": 29,
     "total_saves": 1059,
     "total_shares": 432,
-    "avg_views": 5277,
+    "avg_views": 5281,
     "median_views": 1648,
-    "best_views": 24826
+    "best_views": 24838
   },
   "samples": [
     {
@@ -41,7 +41,7 @@
       "theme_category": "工地/开工服务",
       "content_angle": "问题拆解/方法论",
       "metrics": {
-        "views": 1035,
+        "views": 1037,
         "likes": 21,
         "comments": 0,
         "saves": 15,
@@ -66,7 +66,7 @@
       "theme_category": "其他",
       "content_angle": "主题表达",
       "metrics": {
-        "views": 513,
+        "views": 514,
         "likes": 9,
         "comments": 2,
         "saves": 2,
@@ -91,12 +91,12 @@
       "theme_category": "工地/开工服务",
       "content_angle": "问题拆解/方法论",
       "metrics": {
-        "views": 10371,
-        "likes": 169,
+        "views": 10398,
+        "likes": 170,
         "comments": 0,
         "saves": 157,
         "shares": 63,
-        "engagement_score": 609,
+        "engagement_score": 610,
         "leads_or_inquiries": null,
         "conversion_status": "unknown"
       },
@@ -116,7 +116,7 @@
       "theme_category": "工地/开工服务",
       "content_angle": "问题拆解/方法论",
       "metrics": {
-        "views": 12016,
+        "views": 12027,
         "likes": 304,
         "comments": 1,
         "saves": 190,
@@ -266,7 +266,7 @@
       "theme_category": "案例/设计拆解",
       "content_angle": "第一视角现场教学",
       "metrics": {
-        "views": 24826,
+        "views": 24838,
         "likes": 551,
         "comments": 9,
         "saves": 443,

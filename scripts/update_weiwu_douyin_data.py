@@ -184,8 +184,8 @@ def write_outputs(raw_payload: dict[str, Any]) -> dict[str, Any]:
         'june_works': [enriched_work(item) for item in samples if item['published_at'].startswith('2026-06')],
         'strategy': {
             'keep': ['第一视角无脚本引导', '成品案例开篇/亮点拆解', '工地服务与开工现场的真实问题', '装企老板短视频/IP转型痛点'],
-            'reduce': ['泛 AI 热点和与装企获客弱关联的人设内容', '只讲后端服务产值而不展示账号内容表现'],
-            'next_actions': ['每周用 F2 链路更新账号快照和作品列表', '补咨询数/私信数作为转化字段', '下一条新稿先做发布前 blind prediction，再 T+3 回填'],
+            'reduce': ['泛 AI 热点和与装企获客弱关联的人设内容', '脱离账号表现的服务介绍型内容'],
+            'next_actions': ['每周用 F2 链路更新账号快照和作品列表', '先稳定追踪播放、点赞、收藏、分享、评论', '下一条新稿先做发布前 blind prediction，再 T+3 回填基础数据'],
         },
     }
     SAMPLES_OUT.parent.mkdir(parents=True, exist_ok=True)

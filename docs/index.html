@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>唯吾内容作战台 · V0.5</title>
+  <title>唯吾内容作战台 · V0.6</title>
   <style>
     :root{--bg:#f7f1e8;--ink:#161616;--muted:#706b62;--card:#fffaf0;--line:#191919;--red:#ef4444;--yellow:#f8c14a;--green:#22c55e;--blue:#3b82f6;--purple:#8b5cf6;--shadow:6px 6px 0 #151515}
     *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 10% 10%,#fff6d6 0 18%,transparent 19%),linear-gradient(135deg,#f7f1e8,#ede2d2);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif}.wrap{width:min(1180px,94vw);margin:auto;padding:24px 0 54px}.nav{position:sticky;top:12px;z-index:10;display:flex;justify-content:space-between;align-items:center;background:rgba(255,250,240,.92);backdrop-filter:blur(14px);border:2px solid var(--line);border-radius:20px;padding:12px 16px;box-shadow:var(--shadow)}.brand{display:flex;gap:10px;align-items:center;font-weight:900}.mark{width:34px;height:34px;border:2px solid var(--line);border-radius:10px;background:var(--yellow);display:grid;place-items:center}.nav a{color:var(--ink);text-decoration:none;font-weight:800;margin-left:14px}.hero{display:grid;grid-template-columns:1.08fr .92fr;gap:22px;margin:28px 0}.panel,.card{background:var(--card);border:2px solid var(--line);border-radius:26px;box-shadow:var(--shadow);padding:24px}.kicker{display:inline-flex;gap:8px;align-items:center;border:2px solid var(--line);border-radius:999px;padding:7px 12px;background:#fff;font-weight:900}.kicker b{color:var(--red)}h1{font-size:clamp(34px,5vw,64px);line-height:.98;margin:18px 0 12px;letter-spacing:-2px}h2{font-size:clamp(26px,3vw,40px);margin:0 0 10px}h3{margin:0 0 10px}.lead{font-size:18px;color:var(--muted);line-height:1.7}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.metric{background:#fff;border:2px solid var(--line);border-radius:18px;padding:16px}.metric strong{display:block;font-size:30px}.metric span{color:var(--muted);font-weight:800}.metric.red{background:#ffe1dc}.metric.yellow{background:#fff1bc}.metric.green{background:#daf8df}.metric.blue{background:#dceafe}.section{margin-top:24px}.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}.three{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.work{display:grid;grid-template-columns:80px 1fr auto;gap:14px;align-items:start;background:#fff;border:2px solid var(--line);border-radius:20px;padding:14px;margin:12px 0}.rank{height:56px;border:2px solid var(--line);border-radius:16px;background:var(--yellow);display:grid;place-items:center;font-size:24px;font-weight:950}.work-title{font-weight:950;line-height:1.35}.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.chip{border:1.5px solid var(--line);border-radius:999px;background:#fff;padding:4px 9px;font-size:12px;font-weight:850}.work-score{text-align:right;font-weight:950}.work-score b{font-size:24px}textarea,input,select{width:100%;border:2px solid var(--line);border-radius:18px;background:#fffdf8;padding:14px;font:inherit}textarea{min-height:190px;resize:vertical}button{border:2px solid var(--line);border-radius:999px;background:var(--yellow);padding:12px 18px;font-weight:950;cursor:pointer;box-shadow:4px 4px 0 #151515}button:hover{transform:translate(2px,2px);box-shadow:2px 2px 0 #151515}.btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}.secondary{background:#fff}.danger{background:#ffd7d7}.note{font-size:13px;line-height:1.7;color:var(--muted);margin-top:12px}.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}.step{background:#fff;border:2px dashed var(--line);border-radius:18px;padding:14px}.step b{display:block}.result{background:#161616;color:#fff;border-radius:22px;padding:20px}.result .muted{color:#c9c3b8}.result-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0}.result-box{border:1px solid #555;border-radius:16px;padding:12px}.result-box strong{display:block;font-size:24px}.split{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}.sample-list{max-height:420px;overflow:auto}.footer{margin-top:26px;padding:18px;border:2px solid var(--line);border-radius:20px;background:#fff}.hidden{display:none}@media(max-width:900px){.hero,.two,.three,.split{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,1fr)}.flow{grid-template-columns:1fr}.nav{align-items:flex-start;gap:10px;flex-direction:column}.nav a{margin:0 10px 0 0}.work{grid-template-columns:56px 1fr}.work-score{grid-column:2;text-align:left}}
@@ -12,15 +12,15 @@
 <body>
   <main class="wrap">
     <nav class="nav">
-      <div class="brand"><div class="mark">吾</div><div>唯吾内容作战台 V0.5</div></div>
+      <div class="brand"><div class="mark">吾</div><div>唯吾内容作战台 V0.6</div></div>
       <div><a href="#account">账号</a><a href="#works">作品</a><a href="#strategy">方向</a><a href="#predict">预测</a><a href="#loop">闭环</a></div>
     </nav>
 
     <section class="hero" id="account">
       <div class="panel">
-        <div class="kicker">核心修正 <b>不是业务介绍页</b></div>
+        <div class="kicker">当前阶段 <b>基础数据闭环</b></div>
         <h1>先看账号表现，再决定下一条拍什么。</h1>
-        <p class="lead">我把你给的后端业务文档降级为“定位理解输入”：它用来判断唯吾要吸引什么客户、证明什么价值；前端主画面改成账号实时经营、作品表现、内容方向和预测复盘闭环。</p>
+        <p class="lead">这里先跑通最基础的一层：粉丝、获赞、作品数、播放、点赞、评论、收藏、分享。先让数据自动更新、页面自动吃数、预测按钮能形成任务卡；私信和咨询数据后面再接。</p>
         <div class="btns"><button id="refreshBtn">刷新页面数据</button><button class="secondary" id="sampleBtn">填入新稿示例</button></div>
         <div class="note" id="sourceNote">正在加载账号数据...</div>
       </div>
@@ -34,7 +34,7 @@
       <div class="two">
         <div class="panel">
           <h2>6 月作品表现</h2>
-          <p class="lead">这里展示作品真实表现：播放、点赞、评论、收藏、分享。不是用后端业务产值充门面。</p>
+          <p class="lead">这里展示已抓到的 6 月作品基础表现：播放、点赞、评论、收藏、分享。先用这些指标判断内容方向是否值得继续放大。</p>
           <div id="workList"></div>
         </div>
         <div class="panel">
@@ -52,7 +52,7 @@
     <section class="section split" id="predict">
       <div class="panel">
         <h2>发布前预测</h2>
-        <p class="lead">把下一条“还没发布”的终稿粘进来。这里先做前端粗预测；真正要进入 cheat-on-content 时，我会把它写进 `scripts/` 并生成 blind prediction。</p>
+        <p class="lead">把下一条“还没发布”的终稿粘进来。这里先做前端预演：看结构、找相近历史作品、估一个播放区间；确认要正式预测时，再写入 cheat-on-content 的 blind prediction。</p>
         <textarea id="draft" placeholder="粘贴下一条准备发布的新稿终稿。"></textarea>
         <div class="btns"><button id="predictBtn">生成预测</button><button class="secondary" id="lockBtn">生成闭环任务卡</button></div>
         <div class="note">边界：旧作品只能当 historical anchor；新稿发布前预测才是 blind prediction。</div>
@@ -70,7 +70,7 @@
           <div class="step"><b>1 新稿</b><span>输入未发布终稿</span></div>
           <div class="step"><b>2 预测</b><span>锁定 blind prediction</span></div>
           <div class="step"><b>3 发布</b><span>登记链接和时间</span></div>
-          <div class="step"><b>4 T+3</b><span>回填播放/点赞/咨询</span></div>
+          <div class="step"><b>4 T+3</b><span>回填播放/互动</span></div>
           <div class="step"><b>5 进化</b><span>修正 rubric 和方向</span></div>
         </div>
         <div class="footer" id="taskCard"></div>
@@ -89,14 +89,14 @@ function similarity(text,w){const a=tokens(text),b=tokens((w.desc||'')+(w.theme|
 async function loadData(){
   const res=await fetch('data/weiwu-account.json',{cache:'no-store'}); accountData=await res.json(); renderAll();
 }
-function renderAll(){renderMetrics();renderWorks();renderStrategy();document.getElementById('sourceNote').textContent=`数据源：${accountData.source_type}，生成时间 ${accountData.generated_at}。RedFox 详情接口本轮 data=null，未作为实时源。`;runPredict();}
+function renderAll(){renderMetrics();renderWorks();renderStrategy();const a=accountData.account;document.getElementById('sourceNote').textContent=`数据已更新：${accountData.generated_at}。当前抓到 ${accountData.works_total} 条历史作品，抖音主页显示 ${a.aweme_count} 条；基础数据闭环已接入。`;runPredict();}
 function renderMetrics(){const a=accountData.account,m=accountData.metrics;const items=[['粉丝',a.follower_count,'blue'],['总获赞',a.total_favorited,'yellow'],['作品数',a.aweme_count,'green'],['6月播放',m.june_play_count,'red'],['6月点赞',m.june_likes,'yellow'],['平均播放',m.avg_play_count,'blue'],['最高播放',m.best_play_count,'green'],['互动合计',m.total_likes+m.total_comments+m.total_collects+m.total_shares,'red']];document.getElementById('metricGrid').innerHTML=items.map(i=>`<div class="metric ${i[2]}"><strong>${fmt(i[1])}</strong><span>${i[0]}</span></div>`).join('');}
-function renderWorks(){const works=accountData.june_works.slice().sort((a,b)=>b.play_count-a.play_count);document.getElementById('workList').innerHTML=works.map((w,i)=>`<article class="work"><div class="rank">${i+1}</div><div><div class="work-title">${w.theme}</div><div class="chips"><span class="chip">${classifyWork(w)}</span><span class="chip">赞 ${w.digg_count}</span><span class="chip">评 ${w.comment_count}</span><span class="chip">藏 ${w.collect_count}</span><span class="chip">转 ${w.share_count}</span></div></div><div class="work-score"><b>${fmt(w.play_count)}</b><br><span>播放</span></div></article>`).join('');const best=works[0], worst=works[works.length-1];document.getElementById('diagnosis').innerHTML=`<div class="card"><h3>当前不是内容没价值，是样本太少</h3><p>6月已抓到 ${works.length} 条作品，最高播放 ${fmt(best.play_count)}，最低播放 ${fmt(worst.play_count)}。现在不能用“感觉”判断方向，要按作品类型持续补样本。</p></div><div class="card" style="margin-top:14px"><h3>真正该追的不是产值展示</h3><p>作战台应追踪：播放趋势、点赞/收藏/分享、评论问题、粉丝变化、咨询数、哪类内容更接近成交。后端业务文档只负责定义“我们到底吸引谁”。</p></div>`;}
+function renderWorks(){const works=accountData.june_works.slice().sort((a,b)=>b.play_count-a.play_count);document.getElementById('workList').innerHTML=works.map((w,i)=>`<article class="work"><div class="rank">${i+1}</div><div><div class="work-title">${w.theme}</div><div class="chips"><span class="chip">${classifyWork(w)}</span><span class="chip">赞 ${w.digg_count}</span><span class="chip">评 ${w.comment_count}</span><span class="chip">藏 ${w.collect_count}</span><span class="chip">转 ${w.share_count}</span></div></div><div class="work-score"><b>${fmt(w.play_count)}</b><br><span>播放</span></div></article>`).join('');const best=works[0], worst=works[works.length-1];document.getElementById('diagnosis').innerHTML=`<div class="card"><h3>先把基础数据跑稳</h3><p>6 月已抓到 ${works.length} 条作品，最高播放 ${fmt(best.play_count)}，最低播放 ${fmt(worst.play_count)}。现阶段先看播放、点赞、收藏、分享和评论变化。</p></div><div class="card" style="margin-top:14px"><h3>下一步看内容类型</h3><p>把作品按“开工/工地、成品案例、老板痛点、工具人设”分组，对比哪类内容更容易获得播放和互动，再决定下一条拍什么。</p></div>`;}
 function renderStrategy(){const s=accountData.strategy;const cards=[['继续放大',s.keep,'green'],['减少误区',s.reduce,'red'],['下一步动作',s.next_actions,'yellow']];document.getElementById('strategyCards').innerHTML=cards.map(c=>`<div class="card"><h3>${c[0]}</h3>${c[1].map(x=>`<p>• ${x}</p>`).join('')}</div>`).join('');}
 function estimate(text){const works=accountData?.works||[];let best=null;works.forEach(w=>{const sim=similarity(text,w);if(!best||sim>best.sim)best={w,sim}});const hasPain=/老板|客户|咨询|信任|成交|痛点|同行/.test(text);const hasProof=/案例|开工|工地|业主|真实|数据|播放|点赞/.test(text);const hasMethod=/怎么|方法|步骤|拆解|框架|逻辑|设计/.test(text);const score=Math.min(92,45+text.length/18+(hasPain?14:0)+(hasProof?12:0)+(hasMethod?9:0)+(best?best.sim*14:0));const base=best?.w?.play_count||accountData.metrics.avg_play_count||1800;const mid=Math.round(base*(score/70)*(0.8+(best?.sim||0)*0.7));return{score:Math.round(score),low:Math.max(300,Math.round(mid*.55)),high:Math.max(800,Math.round(mid*1.75)),best,hasPain,hasProof,hasMethod};}
-function runPredict(){if(!accountData)return;const text=document.getElementById('draft').value.trim();const box=document.getElementById('predictResult');if(!text){box.innerHTML='<h2>预测结果</h2><p class="muted">等待输入新稿。</p>';return;}const r=estimate(text);const anchor=r.best?.sim>0?`参考相近作品：《${r.best.w.theme.slice(0,28)}...》，该作品播放 ${fmt(r.best.w.play_count)}、点赞 ${r.best.w.digg_count}。`:'没有明显相近作品，只能按结构粗估。';const advice=[r.hasPain?'痛点明确':'补装修老板/设计师正在遇到的真实问题',r.hasProof?'有证据':'补真实现场/案例/数据',r.hasMethod?'方法感够':'补可执行步骤'];box.innerHTML=`<h2>预测结果</h2><div class="result-grid"><div class="result-box"><strong>${fmt(r.low)}-${fmt(r.high)}</strong><span>播放区间</span></div><div class="result-box"><strong>${r.score}</strong><span>内容分</span></div><div class="result-box"><strong>${Math.max(8,Math.min(70,Math.round((r.score-45)*1.25)))}%</strong><span>小爆概率</span></div></div><p>${anchor}</p><p>判断：${r.score>=78?'值得拍，但结尾必须接账号诊断/咨询动作。':r.score>=65?'可以拍，先加强开头具体痛点和案例证据。':'暂时不建议直接拍，容易变成泛知识。'}</p><p>修改清单：${advice.join(' / ')}</p>`;}
-function fillExample(){document.getElementById('draft').value='装修公司老板做个人 IP 最大的问题，不是不会拍，而是天天把账号当广告位。你讲材料、讲工艺、讲优惠，客户只会继续问价格。真正能带来咨询的内容，应该先把客户最担心的装修风险讲透，再用真实案例证明你能解决。';runPredict();}
-function makeTaskCard(){const text=document.getElementById('draft').value.trim();document.getElementById('taskCard').innerHTML=text?`<b>下一步闭环任务卡</b><p>状态：可进入发布前 blind prediction。请确认这就是终稿；确认后我会写入 scripts/，生成 predictions/ 预测文件。发布后 T+3 回填真实数据。</p>`:`<b>下一步闭环任务卡</b><p>先粘贴一条未发布的新稿，才能生成任务卡。</p>`;}
+function runPredict(){if(!accountData)return;const text=document.getElementById('draft').value.trim();const box=document.getElementById('predictResult');if(!text){box.innerHTML='<h2>预测结果</h2><p class="muted">等待输入新稿。</p>';return;}const r=estimate(text);const anchor=r.best?.sim>0?`参考相近作品：《${r.best.w.theme.slice(0,28)}...》，该作品播放 ${fmt(r.best.w.play_count)}、点赞 ${r.best.w.digg_count}。`:'没有明显相近作品，只能按结构粗估。';const advice=[r.hasPain?'痛点明确':'补装修老板/设计师正在遇到的真实问题',r.hasProof?'有证据':'补真实现场/案例/数据',r.hasMethod?'方法感够':'补可执行步骤'];box.innerHTML=`<h2>预测结果</h2><div class="result-grid"><div class="result-box"><strong>${fmt(r.low)}-${fmt(r.high)}</strong><span>播放区间</span></div><div class="result-box"><strong>${r.score}</strong><span>内容分</span></div><div class="result-box"><strong>${Math.max(8,Math.min(70,Math.round((r.score-45)*1.25)))}%</strong><span>小爆概率</span></div></div><p>${anchor}</p><p>判断：${r.score>=78?'值得拍，但结尾要接清楚下一步行动。':r.score>=65?'可以拍，先加强开头具体痛点和案例证据。':'暂时不建议直接拍，容易变成泛知识。'}</p><p>修改清单：${advice.join(' / ')}</p>`;}
+function fillExample(){document.getElementById('draft').value='装修公司老板做个人 IP 最大的问题，不是不会拍，而是天天把账号当广告位。你讲材料、讲工艺、讲优惠，用户只会继续比价格。更好的内容，应该先把客户最担心的装修风险讲透，再用真实案例证明你能解决，最后给出一个具体判断方法。';runPredict();}
+function makeTaskCard(){const text=document.getElementById('draft').value.trim();document.getElementById('taskCard').innerHTML=text?`<b>下一步闭环任务卡</b><p>状态：可进入发布前 blind prediction。请确认这就是终稿；确认后写入 scripts/，生成 predictions/ 预测文件。发布后 T+3 回填播放、点赞、评论、收藏、分享。</p>`:`<b>下一步闭环任务卡</b><p>先粘贴一条未发布的新稿，才能生成任务卡。</p>`;}
 document.getElementById('predictBtn').addEventListener('click',runPredict);document.getElementById('sampleBtn').addEventListener('click',fillExample);document.getElementById('refreshBtn').addEventListener('click',loadData);document.getElementById('lockBtn').addEventListener('click',makeTaskCard);document.getElementById('draft').addEventListener('input',runPredict);
 loadData().catch(e=>{document.getElementById('sourceNote').textContent='数据加载失败：'+e.message;});
 </script>

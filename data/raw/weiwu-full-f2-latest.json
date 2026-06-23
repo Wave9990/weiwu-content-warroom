@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-23T14:45:37",
+  "generated_at": "2026-06-23T15:03:26",
   "source": "f2_douyin_with_chrome_cookie",
   "request": {
     "start": "2020-01-01",
@@ -30,7 +30,7 @@
       "aweme_count": 14,
       "follower_count": 406,
       "following_count": 17,
-      "total_favorited": 1795
+      "total_favorited": 1796
     },
     "works": [
       {
@@ -43,9 +43,9 @@
         "comment_count": 0,
         "collect_count": 15,
         "share_count": 6,
-        "play_count": 1035,
+        "play_count": 1037,
         "engagement_score": 63,
-        "ranking_score": 1035,
+        "ranking_score": 1037,
         "ranking_basis": "play_count"
       },
       {
@@ -58,9 +58,9 @@
         "comment_count": 2,
         "collect_count": 2,
         "share_count": 0,
-        "play_count": 513,
+        "play_count": 514,
         "engagement_score": 19,
-        "ranking_score": 513,
+        "ranking_score": 514,
         "ranking_basis": "play_count"
       },
       {
@@ -69,13 +69,13 @@
         "desc": "装修行业开工仪式怎么拍？（2）设计亮点篇 这次把“焚决”都交了，全程干货#装修公司#装企营销#设计师ip#装修公司老板 #唯吾装企陪跑",
         "theme": "装修行业开工仪式怎么拍？（2）设计亮点篇 这次把“焚决”都交了，全程干货",
         "url": "https://www.douyin.com/video/7653505708126052838",
-        "digg_count": 169,
+        "digg_count": 170,
         "comment_count": 0,
         "collect_count": 157,
         "share_count": 63,
-        "play_count": 10371,
-        "engagement_score": 609,
-        "ranking_score": 10371,
+        "play_count": 10398,
+        "engagement_score": 610,
+        "ranking_score": 10398,
         "ranking_basis": "play_count"
       },
       {
@@ -88,9 +88,9 @@
         "comment_count": 1,
         "collect_count": 190,
         "share_count": 92,
-        "play_count": 12016,
+        "play_count": 12027,
         "engagement_score": 871,
-        "ranking_score": 12016,
+        "ranking_score": 12027,
         "ranking_basis": "play_count"
       },
       {
@@ -178,9 +178,9 @@
         "comment_count": 9,
         "collect_count": 443,
         "share_count": 166,
-        "play_count": 24826,
+        "play_count": 24838,
         "engagement_score": 1796,
-        "ranking_score": 24826,
+        "ranking_score": 24838,
         "ranking_basis": "play_count"
       },
       {
