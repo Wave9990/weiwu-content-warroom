@@ -3,951 +3,102 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>唯吾内容作战台 · V0.4 样本驱动预测</title>
+  <title>唯吾内容作战台 · V0.5</title>
   <style>
-    :root {
-      --bg: #f4efe6;
-      --ink: #16202a;
-      --muted: #6f726d;
-      --paper: #fffaf0;
-      --paper-2: #fbf0dc;
-      --line: #27221b;
-      --red: #f05a45;
-      --blue: #295dff;
-      --green: #1d8f62;
-      --yellow: #ffc94a;
-      --shadow: 8px 8px 0 #151515;
-      --soft-shadow: 0 18px 50px rgba(26, 21, 15, 0.15);
-      --radius: 26px;
-    }
-
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      color: var(--ink);
-      font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-      background:
-        radial-gradient(circle at 10% 5%, rgba(255, 201, 74, .38), transparent 22%),
-        radial-gradient(circle at 88% 12%, rgba(41, 93, 255, .18), transparent 22%),
-        linear-gradient(0deg, rgba(22,32,42,.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(22,32,42,.04) 1px, transparent 1px),
-        var(--bg);
-      background-size: auto, auto, 34px 34px, 34px 34px, auto;
-    }
-
-    .wrap {
-      width: min(1500px, calc(100vw - 32px));
-      margin: 0 auto;
-      padding: 24px 0 60px;
-    }
-
-    .nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-      padding: 14px 18px;
-      border: 2px solid var(--line);
-      border-radius: 999px;
-      background: rgba(255, 250, 240, .78);
-      backdrop-filter: blur(14px);
-      box-shadow: 4px 4px 0 #151515;
-      position: sticky;
-      top: 14px;
-      z-index: 20;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-weight: 900;
-      letter-spacing: -.02em;
-    }
-
-    .mark {
-      display: grid;
-      place-items: center;
-      width: 42px;
-      height: 42px;
-      border: 2px solid var(--line);
-      border-radius: 50%;
-      background: var(--yellow);
-      box-shadow: 3px 3px 0 #151515;
-    }
-
-    .nav a {
-      color: var(--ink);
-      text-decoration: none;
-      font-weight: 800;
-      font-size: 14px;
-      margin-left: 14px;
-    }
-
-    .hero {
-      display: grid;
-      grid-template-columns: 1fr .78fr;
-      gap: 22px;
-      margin-top: 28px;
-      align-items: stretch;
-    }
-
-    .hero-main, .card, .panel {
-      border: 2px solid var(--line);
-      border-radius: var(--radius);
-      background: rgba(255, 250, 240, .92);
-      box-shadow: var(--shadow);
-    }
-
-    .hero-main {
-      padding: clamp(26px, 5vw, 58px);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero-main::after {
-      content: "输入稿子 → 预测效果 → 复盘沉淀 → 靠近变现";
-      position: absolute;
-      left: 32px;
-      bottom: 22px;
-      color: rgba(22,32,42,.08);
-      font-size: clamp(38px, 7vw, 96px);
-      font-weight: 1000;
-      letter-spacing: -.08em;
-      white-space: nowrap;
-      pointer-events: none;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      gap: 8px;
-      align-items: center;
-      padding: 8px 12px;
-      border: 2px solid var(--line);
-      border-radius: 999px;
-      background: #fff;
-      box-shadow: 3px 3px 0 #151515;
-      font-weight: 900;
-      font-size: 13px;
-    }
-
-    h1 {
-      position: relative;
-      margin: 28px 0 18px;
-      font-size: clamp(44px, 7vw, 96px);
-      line-height: .94;
-      letter-spacing: -.085em;
-      max-width: 880px;
-      z-index: 1;
-    }
-
-    .lead {
-      position: relative;
-      max-width: 820px;
-      font-size: 20px;
-      line-height: 1.75;
-      color: #3b3d3a;
-      z-index: 1;
-    }
-
-    .hero-side {
-      padding: 24px;
-      background: #182230;
-      color: #fffaf0;
-      box-shadow: var(--shadow);
-      border: 2px solid var(--line);
-      border-radius: var(--radius);
-    }
-
-    .hero-side h2 { margin: 0 0 16px; font-size: 28px; letter-spacing: -.04em; }
-    .hero-side p { color: #d7d0c2; line-height: 1.75; }
-
-    .metrics {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-      margin-top: 22px;
-    }
-
-    .metric {
-      padding: 16px;
-      border: 2px solid rgba(255,250,240,.3);
-      border-radius: 20px;
-      background: rgba(255,255,255,.08);
-    }
-    .metric b { display: block; font-size: 32px; color: var(--yellow); }
-    .metric span { font-size: 13px; color: #d7d0c2; }
-
-    .section-title {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      gap: 24px;
-      margin: 54px 4px 18px;
-    }
-    .section-title h2 { margin: 0; font-size: clamp(32px, 5vw, 58px); letter-spacing: -.07em; }
-    .section-title p { max-width: 620px; margin: 0; color: var(--muted); line-height: 1.65; }
-
-    .predictor {
-      display: grid;
-      grid-template-columns: .95fr 1.05fr;
-      gap: 20px;
-    }
-
-    .input-panel, .result-panel {
-      padding: 24px;
-      min-height: 640px;
-    }
-
-    .field-label {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin: 0 0 10px;
-      font-weight: 900;
-    }
-
-    textarea {
-      width: 100%;
-      min-height: 270px;
-      resize: vertical;
-      padding: 18px;
-      border: 2px solid var(--line);
-      border-radius: 20px;
-      background: #fffdf7;
-      color: var(--ink);
-      font: 16px/1.65 "PingFang SC", sans-serif;
-      outline: none;
-      box-shadow: inset 4px 4px 0 rgba(22,32,42,.06);
-    }
-
-    .controls {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-      margin: 14px 0;
-    }
-
-    select, input {
-      width: 100%;
-      padding: 13px 14px;
-      border: 2px solid var(--line);
-      border-radius: 16px;
-      background: #fffdf7;
-      font-weight: 800;
-    }
-
-    .btn-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 16px; }
-    button {
-      cursor: pointer;
-      border: 2px solid var(--line);
-      border-radius: 999px;
-      padding: 14px 18px;
-      background: var(--yellow);
-      color: var(--ink);
-      font-weight: 1000;
-      box-shadow: 4px 4px 0 #151515;
-      transition: transform .18s ease, box-shadow .18s ease;
-    }
-    button:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 #151515; }
-    button.secondary { background: #fff; }
-
-    .note {
-      margin-top: 16px;
-      padding: 16px;
-      border: 2px dashed rgba(22,32,42,.35);
-      border-radius: 18px;
-      color: var(--muted);
-      line-height: 1.65;
-      background: rgba(255,255,255,.38);
-    }
-
-    .scoreboard {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-bottom: 18px;
-    }
-
-    .score {
-      padding: 18px;
-      border: 2px solid var(--line);
-      border-radius: 20px;
-      background: #fffdf7;
-      box-shadow: 4px 4px 0 rgba(22,32,42,.15);
-    }
-    .score b { display: block; font-size: 36px; letter-spacing: -.06em; }
-    .score span { color: var(--muted); font-size: 13px; font-weight: 800; }
-
-    .prediction-output {
-      display: grid;
-      gap: 12px;
-    }
-
-    .output-card {
-      padding: 16px;
-      border: 2px solid var(--line);
-      border-radius: 18px;
-      background: #fffdf7;
-    }
-    .output-card h3 { margin: 0 0 8px; font-size: 18px; }
-    .output-card p { margin: 0; line-height: 1.65; color: #484b46; }
-
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 7px 10px;
-      border-radius: 999px;
-      border: 2px solid var(--line);
-      background: #fff;
-      font-size: 12px;
-      font-weight: 1000;
-      margin-right: 6px;
-      margin-bottom: 6px;
-    }
-    .pill.red { background: #ffe0dc; }
-    .pill.blue { background: #dfe6ff; }
-    .pill.green { background: #dff7e9; }
-    .pill.yellow { background: #fff0b5; }
-
-    .warroom-grid {
-      display: grid;
-      grid-template-columns: 1.15fr .85fr;
-      gap: 20px;
-    }
-
-    .map {
-      padding: 24px;
-    }
-
-    .lane {
-      display: grid;
-      grid-template-columns: 140px 1fr;
-      gap: 16px;
-      align-items: stretch;
-      padding: 14px 0;
-      border-bottom: 2px dashed rgba(22,32,42,.18);
-    }
-    .lane:last-child { border-bottom: 0; }
-    .lane-label {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 2px solid var(--line);
-      border-radius: 18px;
-      background: var(--paper-2);
-      font-weight: 1000;
-      text-align: center;
-    }
-    .lane-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-    .lane-card {
-      min-height: 104px;
-      padding: 14px;
-      border: 2px solid var(--line);
-      border-radius: 18px;
-      background: #fffdf7;
-      box-shadow: 3px 3px 0 rgba(22,32,42,.16);
-    }
-    .lane-card b { display: block; margin-bottom: 6px; }
-    .lane-card small { color: var(--muted); line-height: 1.5; }
-
-    .recommend {
-      padding: 24px;
-      background: #182230;
-      color: #fffaf0;
-    }
-    .recommend h3 { margin: 0 0 14px; font-size: 26px; letter-spacing: -.04em; }
-    .task {
-      padding: 15px;
-      border: 2px solid rgba(255,250,240,.35);
-      border-radius: 18px;
-      background: rgba(255,255,255,.08);
-      margin-bottom: 12px;
-    }
-    .task b { color: var(--yellow); }
-    .task p { margin: 8px 0 0; color: #d7d0c2; line-height: 1.6; }
-
-    .business-strip {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 12px;
-      margin-top: 20px;
-    }
-    .biz {
-      padding: 18px;
-      border: 2px solid var(--line);
-      border-radius: 20px;
-      background: #fffdf7;
-      min-height: 150px;
-    }
-    .biz strong { display: block; font-size: 18px; margin-bottom: 8px; }
-    .biz p { margin: 0; color: var(--muted); line-height: 1.55; font-size: 14px; }
-
-    .footer {
-      margin-top: 42px;
-      padding: 22px;
-      border: 2px solid var(--line);
-      border-radius: 22px;
-      background: #fffdf7;
-      box-shadow: 4px 4px 0 #151515;
-      color: var(--muted);
-      line-height: 1.7;
-    }
-
-    .sample-loop {
-      display: grid;
-      grid-template-columns: .95fr 1.05fr;
-      gap: 20px;
-    }
-
-    .sample-form, .sample-list {
-      padding: 24px;
-    }
-
-    .sample-form-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-      margin-bottom: 12px;
-    }
-
-    .sample-form textarea {
-      min-height: 150px;
-      margin-bottom: 12px;
-    }
-
-    .sample-card {
-      padding: 16px;
-      border: 2px solid var(--line);
-      border-radius: 18px;
-      background: #fffdf7;
-      box-shadow: 3px 3px 0 rgba(22,32,42,.16);
-      margin-bottom: 12px;
-    }
-
-    .sample-card h3 {
-      margin: 0 0 8px;
-      font-size: 18px;
-    }
-
-    .sample-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin: 10px 0;
-    }
-
-    .sample-empty {
-      padding: 24px;
-      border: 2px dashed rgba(22,32,42,.32);
-      border-radius: 18px;
-      color: var(--muted);
-      line-height: 1.7;
-      background: rgba(255,255,255,.4);
-    }
-
-    .sample-json {
-      width: 100%;
-      min-height: 180px;
-      margin-top: 12px;
-      font-size: 13px;
-      white-space: pre-wrap;
-    }
-
-    .danger-text { color: var(--red); font-weight: 900; }
-
-    @media (max-width: 1060px) {
-      .hero, .predictor, .warroom-grid, .sample-loop { grid-template-columns: 1fr; }
-      .business-strip { grid-template-columns: repeat(2, 1fr); }
-      .lane { grid-template-columns: 1fr; }
-    }
-
-    @media (max-width: 720px) {
-      .wrap { width: min(100vw - 20px, 1500px); padding-top: 10px; }
-      .nav { position: static; border-radius: 22px; align-items: flex-start; flex-direction: column; }
-      .nav-links { display: flex; flex-wrap: wrap; gap: 10px; }
-      .nav a { margin-left: 0; }
-      .scoreboard, .controls, .lane-cards, .business-strip, .metrics { grid-template-columns: 1fr; }
-      .hero-main, .input-panel, .result-panel, .map, .recommend { padding: 18px; }
-      .section-title { align-items: flex-start; flex-direction: column; }
-    }
+    :root{--bg:#f7f1e8;--ink:#161616;--muted:#706b62;--card:#fffaf0;--line:#191919;--red:#ef4444;--yellow:#f8c14a;--green:#22c55e;--blue:#3b82f6;--purple:#8b5cf6;--shadow:6px 6px 0 #151515}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 10% 10%,#fff6d6 0 18%,transparent 19%),linear-gradient(135deg,#f7f1e8,#ede2d2);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif}.wrap{width:min(1180px,94vw);margin:auto;padding:24px 0 54px}.nav{position:sticky;top:12px;z-index:10;display:flex;justify-content:space-between;align-items:center;background:rgba(255,250,240,.92);backdrop-filter:blur(14px);border:2px solid var(--line);border-radius:20px;padding:12px 16px;box-shadow:var(--shadow)}.brand{display:flex;gap:10px;align-items:center;font-weight:900}.mark{width:34px;height:34px;border:2px solid var(--line);border-radius:10px;background:var(--yellow);display:grid;place-items:center}.nav a{color:var(--ink);text-decoration:none;font-weight:800;margin-left:14px}.hero{display:grid;grid-template-columns:1.08fr .92fr;gap:22px;margin:28px 0}.panel,.card{background:var(--card);border:2px solid var(--line);border-radius:26px;box-shadow:var(--shadow);padding:24px}.kicker{display:inline-flex;gap:8px;align-items:center;border:2px solid var(--line);border-radius:999px;padding:7px 12px;background:#fff;font-weight:900}.kicker b{color:var(--red)}h1{font-size:clamp(34px,5vw,64px);line-height:.98;margin:18px 0 12px;letter-spacing:-2px}h2{font-size:clamp(26px,3vw,40px);margin:0 0 10px}h3{margin:0 0 10px}.lead{font-size:18px;color:var(--muted);line-height:1.7}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.metric{background:#fff;border:2px solid var(--line);border-radius:18px;padding:16px}.metric strong{display:block;font-size:30px}.metric span{color:var(--muted);font-weight:800}.metric.red{background:#ffe1dc}.metric.yellow{background:#fff1bc}.metric.green{background:#daf8df}.metric.blue{background:#dceafe}.section{margin-top:24px}.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}.three{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.work{display:grid;grid-template-columns:80px 1fr auto;gap:14px;align-items:start;background:#fff;border:2px solid var(--line);border-radius:20px;padding:14px;margin:12px 0}.rank{height:56px;border:2px solid var(--line);border-radius:16px;background:var(--yellow);display:grid;place-items:center;font-size:24px;font-weight:950}.work-title{font-weight:950;line-height:1.35}.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.chip{border:1.5px solid var(--line);border-radius:999px;background:#fff;padding:4px 9px;font-size:12px;font-weight:850}.work-score{text-align:right;font-weight:950}.work-score b{font-size:24px}textarea,input,select{width:100%;border:2px solid var(--line);border-radius:18px;background:#fffdf8;padding:14px;font:inherit}textarea{min-height:190px;resize:vertical}button{border:2px solid var(--line);border-radius:999px;background:var(--yellow);padding:12px 18px;font-weight:950;cursor:pointer;box-shadow:4px 4px 0 #151515}button:hover{transform:translate(2px,2px);box-shadow:2px 2px 0 #151515}.btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}.secondary{background:#fff}.danger{background:#ffd7d7}.note{font-size:13px;line-height:1.7;color:var(--muted);margin-top:12px}.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}.step{background:#fff;border:2px dashed var(--line);border-radius:18px;padding:14px}.step b{display:block}.result{background:#161616;color:#fff;border-radius:22px;padding:20px}.result .muted{color:#c9c3b8}.result-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0}.result-box{border:1px solid #555;border-radius:16px;padding:12px}.result-box strong{display:block;font-size:24px}.split{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}.sample-list{max-height:420px;overflow:auto}.footer{margin-top:26px;padding:18px;border:2px solid var(--line);border-radius:20px;background:#fff}.hidden{display:none}@media(max-width:900px){.hero,.two,.three,.split{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,1fr)}.flow{grid-template-columns:1fr}.nav{align-items:flex-start;gap:10px;flex-direction:column}.nav a{margin:0 10px 0 0}.work{grid-template-columns:56px 1fr}.work-score{grid-column:2;text-align:left}}
   </style>
 </head>
 <body>
   <main class="wrap">
     <nav class="nav">
-      <div class="brand"><div class="mark">吾</div><div>唯吾内容作战台 V0.4</div></div>
-      <div class="nav-links">
-        <a href="#predict">内容预测</a>
-        <a href="#warroom">内容作战台</a>
-        <a href="#business">变现链路</a>
-        <a href="#samples">样本回填</a>
-        <a href="#usage">怎么用</a>
-      </div>
+      <div class="brand"><div class="mark">吾</div><div>唯吾内容作战台 V0.5</div></div>
+      <div><a href="#account">账号</a><a href="#works">作品</a><a href="#strategy">方向</a><a href="#predict">预测</a><a href="#loop">闭环</a></div>
     </nav>
 
-    <section class="hero">
-      <div class="hero-main">
-        <span class="eyebrow">不是展示页，是内容决策工具</span>
-        <h1>输入一篇稿子，先判断它值不值得拍。</h1>
-        <p class="lead">新版分成两个大板块：内容预测板块帮你预估播放、点赞、爆的概率和转化价值；内容作战台板块帮唯吾账号沉淀框架、样本、数据，并定期判断下一阶段该做什么内容来靠近变现。</p>
+    <section class="hero" id="account">
+      <div class="panel">
+        <div class="kicker">核心修正 <b>不是业务介绍页</b></div>
+        <h1>先看账号表现，再决定下一条拍什么。</h1>
+        <p class="lead">我把你给的后端业务文档降级为“定位理解输入”：它用来判断唯吾要吸引什么客户、证明什么价值；前端主画面改成账号实时经营、作品表现、内容方向和预测复盘闭环。</p>
+        <div class="btns"><button id="refreshBtn">刷新页面数据</button><button class="secondary" id="sampleBtn">填入新稿示例</button></div>
+        <div class="note" id="sourceNote">正在加载账号数据...</div>
       </div>
-      <aside class="hero-side">
-        <h2>产品定位</h2>
-        <p>唯吾不是做“网红玩法”，而是装修行业 IP 运营与内容获客服务商。页面所有判断都围绕一个目标：让账号不只是有内容，而是有客户来。</p>
-        <div class="metrics">
-          <div class="metric"><b>1.5亿+</b><span>过往陪跑项目总变现产值</span></div>
-          <div class="metric"><b>800+</b><span>服务家顾销售与设计师 IP</span></div>
-          <div class="metric"><b>100+</b><span>账号矩阵孵化样本</span></div>
-          <div class="metric"><b>15+</b><span>年变现 500 万+ 销售 IP</span></div>
-        </div>
-      </aside>
+      <div class="panel">
+        <h2>账号实时概览</h2>
+        <div class="grid" id="metricGrid"></div>
+      </div>
     </section>
 
-    <section id="predict">
-      <div class="section-title">
-        <h2>板块一：内容预测</h2>
-        <p>你把明天想拍的稿子粘进来，前端给出模拟预测：预计播放、点赞、爆款概率、获客价值、风险点和修改建议。当前是前端 mock，后续接入历史样本与 cheat-on-content 后变成真实预测。</p>
-      </div>
-      <div class="predictor">
-        <div class="card input-panel">
-          <div class="field-label"><span>输入待拍稿子</span><span class="pill yellow">发布前终稿最佳</span></div>
-          <textarea id="draft" placeholder="把明天准备拍的逐字稿粘在这里。例如：装修老板做个人 IP 最大的问题，不是不会拍视频，而是一直把账号当广告位……"></textarea>
-          <div class="controls">
-            <select id="contentType">
-              <option value="opinion">观点口播</option>
-              <option value="case">案例拆解</option>
-              <option value="pain">痛点诊断</option>
-              <option value="method">方法论教学</option>
-            </select>
-            <select id="goal">
-              <option value="lead">目标：精准获客</option>
-              <option value="trust">目标：建立信任</option>
-              <option value="deal">目标：促进成交</option>
-              <option value="brand">目标：账号定位</option>
-            </select>
-            <input id="accountStage" value="账号阶段：定位强化期" />
-            <input id="sampleCount" value="历史参考样本：3 条" />
-          </div>
-          <div class="btn-row">
-            <button onclick="runPrediction()">生成预测结果</button>
-            <button class="secondary" onclick="loadExample()">填入示例稿</button>
-          </div>
-          <div class="note" id="sampleSourceNote">重要边界：历史已发布内容只能做 anchor，不能补写盲预测。真正可校准的预测，必须在发布前生成并锁定。当前正在加载历史样本...</div>
+    <section class="section" id="works">
+      <div class="two">
+        <div class="panel">
+          <h2>6 月作品表现</h2>
+          <p class="lead">这里展示作品真实表现：播放、点赞、评论、收藏、分享。不是用后端业务产值充门面。</p>
+          <div id="workList"></div>
         </div>
-
-        <div class="card result-panel">
-          <div class="scoreboard">
-            <div class="score"><b id="views">1.2w-3.8w</b><span>预计播放区间</span></div>
-            <div class="score"><b id="likes">180-620</b><span>预计点赞区间</span></div>
-            <div class="score"><b id="viral">21%</b><span>小爆概率</span></div>
-          </div>
-          <div class="prediction-output">
-            <div class="output-card">
-              <h3>预测判断</h3>
-              <p id="judgement">这条内容适合做“信任建立型”内容，不一定追求高播放，但如果开头能具体到装修老板的真实经营痛点，获客价值会高于泛流量内容。</p>
-            </div>
-            <div class="output-card">
-              <h3>爆点雷达</h3>
-              <span class="pill red" id="hookPill">开头冲突：中</span>
-              <span class="pill blue" id="proofPill">案例证据：偏弱</span>
-              <span class="pill green" id="leadPill">获客关联：强</span>
-              <span class="pill yellow" id="trustPill">信任感：中高</span>
-            </div>
-            <div class="output-card">
-              <h3>修改建议</h3>
-              <p id="advice">把“装修老板做不好 IP”改成更具体的场景开头：比如“你的视频天天讲工艺，但客户还是只问价格”。先让目标客户点头，再讲方法。</p>
-            </div>
-            <div class="output-card">
-              <h3>变现链路匹配</h3>
-              <p id="businessFit">匹配“账号定位 → 信任建立 → 私域咨询”链路。建议结尾不要强卖课，而是引导老板自查账号是否还停留在广告号。</p>
-            </div>
-          </div>
+        <div class="panel">
+          <h2>表现诊断</h2>
+          <div id="diagnosis"></div>
         </div>
       </div>
     </section>
 
-    <section id="warroom">
-      <div class="section-title">
-        <h2>板块二：内容作战台</h2>
-        <p>这里不是看热闹的数据大屏，而是账号经营驾驶舱：沉淀什么内容框架、哪个方向更接近成交、下一阶段该做什么系列。</p>
-      </div>
-      <div class="warroom-grid">
-        <div class="panel map">
-          <div class="lane">
-            <div class="lane-label">内容池</div>
-            <div class="lane-cards">
-              <div class="lane-card"><b>精准痛点</b><small>装修老板不会把专业翻译成客户语言。</small></div>
-              <div class="lane-card"><b>信任案例</b><small>用真实签单链路证明内容不是虚荣指标。</small></div>
-              <div class="lane-card"><b>方法论</b><small>账号定位、选题、拍摄、投流、复盘。</small></div>
-            </div>
-          </div>
-          <div class="lane">
-            <div class="lane-label">数据沉淀</div>
-            <div class="lane-cards">
-              <div class="lane-card"><b>内容表现</b><small>播放、点赞、评论、转粉、私信。</small></div>
-              <div class="lane-card"><b>转化表现</b><small>咨询、到店、签单、施工产值。</small></div>
-              <div class="lane-card"><b>预测偏差</b><small>高估/低估/命中，推动 rubric 进化。</small></div>
-            </div>
-          </div>
-          <div class="lane">
-            <div class="lane-label">下一阶段</div>
-            <div class="lane-cards">
-              <div class="lane-card"><b>从流量到线索</b><small>减少泛爆款，增加能筛选客户的内容。</small></div>
-              <div class="lane-card"><b>从讲专业到讲结果</b><small>让客户看见“为什么找你更确定”。</small></div>
-              <div class="lane-card"><b>从单条到系列</b><small>固定栏目，提高账号记忆点。</small></div>
-            </div>
-          </div>
-        </div>
+    <section class="section" id="strategy">
+      <h2>内容方向作战台</h2>
+      <div class="three" id="strategyCards"></div>
+    </section>
 
-        <aside class="panel recommend">
-          <h3>本周推荐动作</h3>
-          <div class="task"><b>1. 先补 3 条历史 anchor</b><p>用唯吾已发布内容建立参考样本：标题、逐字稿、平台数据、是否有咨询/成交链路。</p></div>
-          <div class="task"><b>2. 做 1 条发布前真预测</b><p>选明天要拍的终稿，先在这里预测，再发，T+3 回填数据。</p></div>
-          <div class="task"><b>3. 新增“获客内容”系列</b><p>围绕“有播放不等于有客户”连续做 3 条，让账号定位从内容展示走向业务筛选。</p></div>
-          <div class="task"><b>4. 复盘不只看点赞</b><p>同步记录私信、咨询、客户质量、是否进入成交动作。</p></div>
-        </aside>
+    <section class="section split" id="predict">
+      <div class="panel">
+        <h2>发布前预测</h2>
+        <p class="lead">把下一条“还没发布”的终稿粘进来。这里先做前端粗预测；真正要进入 cheat-on-content 时，我会把它写进 `scripts/` 并生成 blind prediction。</p>
+        <textarea id="draft" placeholder="粘贴下一条准备发布的新稿终稿。"></textarea>
+        <div class="btns"><button id="predictBtn">生成预测</button><button class="secondary" id="lockBtn">生成闭环任务卡</button></div>
+        <div class="note">边界：旧作品只能当 historical anchor；新稿发布前预测才是 blind prediction。</div>
+      </div>
+      <div class="result" id="predictResult">
+        <h2>预测结果</h2>
+        <p class="muted">等待输入新稿。</p>
       </div>
     </section>
 
-    <section id="business">
-      <div class="section-title">
-        <h2>后端变现链路</h2>
-        <p>从你给的飞书文档里读到的核心：唯吾做的是装修行业 IP 运营与内容获客，不晒虚荣指标，而看真实进入签单链路的产值数据。</p>
-      </div>
-      <div class="business-strip">
-        <div class="biz"><strong>账号定位</strong><p>先确定老板、设计师、销冠的角色人设和客户筛选标准。</p></div>
-        <div class="biz"><strong>选题拍摄</strong><p>围绕精准客户痛点生产内容，不做泛娱乐网红玩法。</p></div>
-        <div class="biz"><strong>投流放大</strong><p>对能带来有效咨询的内容放大，而不是只追播放。</p></div>
-        <div class="biz"><strong>成交复盘</strong><p>追踪咨询、到店、签单、施工进场，形成业务闭环。</p></div>
-        <div class="biz"><strong>方法复制</strong><p>把成功样本沉淀成团队可复用的新媒体获客系统。</p></div>
-      </div>
-    </section>
-
-    <section id="samples">
-      <div class="section-title">
-        <h2>历史样本闭环</h2>
-        <p>这就是你问的“3 条已发布内容 + T+3 回填数据”怎么给我：直接在这里录入，浏览器会本地保存，最后导出 JSON 发给我。注意：这些是 historical anchor，不会伪装成发布前盲预测。</p>
-      </div>
-      <div class="sample-loop">
-        <div class="card sample-form">
-          <div class="field-label"><span>录入一条已发布内容</span><span class="pill red">历史样本</span></div>
-          <div class="sample-form-grid">
-            <input id="sampleTitle" placeholder="标题 / 选题名" />
-            <input id="sampleUrl" placeholder="发布链接，可先留空" />
-            <input id="sampleDate" type="date" />
-            <select id="samplePlatform">
-              <option value="douyin">抖音</option>
-              <option value="xiaohongshu">小红书</option>
-              <option value="shipinhao">视频号</option>
-              <option value="other">其他</option>
-            </select>
-          </div>
-          <textarea id="sampleTranscript" placeholder="粘贴这条已发布内容的逐字稿 / 口播稿。没有完整逐字稿也可以先填核心内容。"></textarea>
-          <div class="sample-form-grid">
-            <input id="sampleViews" type="number" min="0" placeholder="T+3 播放量" />
-            <input id="sampleLikes" type="number" min="0" placeholder="T+3 点赞" />
-            <input id="sampleComments" type="number" min="0" placeholder="T+3 评论" />
-            <input id="sampleShares" type="number" min="0" placeholder="T+3 转发/收藏" />
-            <input id="sampleLeads" type="number" min="0" placeholder="T+3 私信/咨询" />
-            <select id="sampleConversion">
-              <option value="unknown">是否进入成交链路：未知</option>
-              <option value="none">未进入</option>
-              <option value="lead">有有效咨询</option>
-              <option value="deal">已关联成交/产值</option>
-            </select>
-          </div>
-          <textarea id="sampleNotes" placeholder="备注：这条为什么表现好/差？有没有客户咨询、评论关键词、成交线索？"></textarea>
-          <div class="btn-row">
-            <button onclick="saveSample()">保存这条样本</button>
-            <button class="secondary" onclick="fillSampleExample()">填入示例</button>
-            <button class="secondary" onclick="clearSampleForm()">清空表单</button>
-          </div>
-          <div class="note"><span class="danger-text">隐私提醒：</span>不要填客户手机号、微信号、合同号、客户真实姓名。只填内容表现和脱敏成交链路。</div>
+    <section class="section" id="loop">
+      <div class="panel">
+        <h2>完整循环怎么跑</h2>
+        <div class="flow">
+          <div class="step"><b>1 新稿</b><span>输入未发布终稿</span></div>
+          <div class="step"><b>2 预测</b><span>锁定 blind prediction</span></div>
+          <div class="step"><b>3 发布</b><span>登记链接和时间</span></div>
+          <div class="step"><b>4 T+3</b><span>回填播放/点赞/咨询</span></div>
+          <div class="step"><b>5 进化</b><span>修正 rubric 和方向</span></div>
         </div>
-        <div class="card sample-list">
-          <div class="field-label"><span>已保存样本</span><span class="pill yellow" id="sampleCounter">0 / 3</span></div>
-          <div id="sampleList" class="sample-empty">还没有录入样本。建议先补 3 条：一条播放好、一条咨询好、一条表现一般但有代表性。</div>
-          <div class="btn-row">
-            <button onclick="exportSamples()">导出 JSON 给艾玛斯</button>
-            <button class="secondary" onclick="copySamplesJson()">复制 JSON</button>
-            <button class="secondary" onclick="resetSamples()">清空本机样本</button>
-          </div>
-          <textarea id="samplesJson" class="sample-json" readonly placeholder="导出的 JSON 会显示在这里。"></textarea>
-        </div>
+        <div class="footer" id="taskCard"></div>
       </div>
-    </section>
-
-    <section class="footer" id="usage">
-      <strong>怎么用：</strong>第一步，把明天想拍的终稿粘到“内容预测”里，点生成预测；第二步，在“历史样本闭环”里录入 3 条已发布内容和 T+3 数据，导出 JSON 发给艾玛斯；第三步，后续发布前先预测，发布后 T+3 回填，逐步把 mock 预测变成真实校准循环。当前版本数据保存在你的浏览器本地，不会自动上传。
     </section>
   </main>
 
-  <script>
-    const draft = document.getElementById('draft');
-    let historicalAnchors = [];
-
-    function clamp(num, min, max) {
-      return Math.max(min, Math.min(max, num));
-    }
-
-    function estimateText(text) {
-      const length = text.trim().length;
-      const hasPain = /痛|客户|价格|信任|获客|成交|老板|设计师|销售|咨询|同行|担心/.test(text);
-      const hasProof = /案例|数据|产值|签单|1\.5亿|500万|真实|客户|业主|开工|成品/.test(text);
-      const hasConflict = /不是|而是|最大的问题|别再|停掉|误区|不等于|同行/.test(text);
-      const hasAction = /怎么|三步|方法|建议|自查|复盘|定位|问题|步骤|标准化/.test(text);
-      const matchedAnchor = findBestAnchor(text);
-      const base = clamp(45 + Math.floor(length / 18), 45, 82);
-      const anchorBoost = matchedAnchor ? Math.round(matchedAnchor.similarity * 10) : 0;
-      const score = clamp(base + (hasPain ? 8 : 0) + (hasProof ? 7 : 0) + (hasConflict ? 6 : 0) + (hasAction ? 4 : 0) + anchorBoost, 50, 96);
-      const anchorViews = matchedAnchor?.sample?.t3_metrics?.views || 24000;
-      const anchorLikes = matchedAnchor?.sample?.t3_metrics?.likes || 320;
-      const anchorLeads = matchedAnchor?.sample?.t3_metrics?.leads_or_inquiries ?? null;
-      const anchorMultiplier = matchedAnchor ? clamp(0.72 + matchedAnchor.similarity * 0.85, 0.72, 1.45) : 1;
-      const viewsMid = Math.round(anchorViews * anchorMultiplier * (score / 78));
-      const viewsLow = Math.max(1200, Math.round(viewsMid * 0.58 / 100) * 100);
-      const viewsHigh = Math.max(viewsLow + 900, Math.round(viewsMid * 1.72 / 100) * 100);
-      const likeRate = anchorViews ? anchorLikes / anchorViews : 0.018;
-      const likesLow = Math.max(20, Math.round(viewsLow * likeRate * 0.8));
-      const likesHigh = Math.max(likesLow + 60, Math.round(viewsHigh * likeRate * 1.18));
-      const viral = clamp(Math.round((score - 55) * 1.25 + (matchedAnchor ? matchedAnchor.similarity * 9 : 0)), 8, 72);
-      return { score, viewsLow, viewsHigh, likesLow, likesHigh, viral, hasPain, hasProof, hasConflict, hasAction, matchedAnchor, anchorLeads };
-    }
-
-    function tokenize(text) {
-      const keywords = ['开工', '成品', '案例', '老板', '装修公司', '设计师', '业主', '同行', '拍摄', '第一视角', '无脚本', '咨询', '痛点', '工地', '方法', '采访', '亮点', '客户', '信任', '成交'];
-      return keywords.filter((word) => text.includes(word));
-    }
-
-    function findBestAnchor(text) {
-      if (!historicalAnchors.length) return null;
-      const tokens = tokenize(text);
-      let best = null;
-      historicalAnchors.forEach((sample) => {
-        const sampleText = `${sample.title} ${sample.transcript} ${sample.notes || ''}`;
-        const sampleTokens = tokenize(sampleText);
-        const overlap = tokens.filter((token) => sampleTokens.includes(token));
-        const similarity = tokens.length ? overlap.length / tokens.length : 0;
-        if (!best || similarity > best.similarity) best = { sample, similarity, overlap };
-      });
-      return best && best.similarity > 0 ? best : null;
-    }
-
-    function runPrediction() {
-      const text = draft.value || '';
-      const result = estimateText(text);
-      document.getElementById('views').textContent = `${formatNum(result.viewsLow)}-${formatNum(result.viewsHigh)}`;
-      document.getElementById('likes').textContent = `${result.likesLow}-${result.likesHigh}`;
-      document.getElementById('viral').textContent = `${result.viral}%`;
-
-      const judgement = result.score >= 82
-        ? '这条具备较强传播潜力，尤其适合做“精准客户筛选型”内容。建议保留冲突开头，同时补一段真实业务证据。'
-        : result.score >= 70
-          ? '这条适合作为稳定获客内容，不一定爆，但能帮助目标客户理解唯吾的价值。关键是开头要更具体。'
-          : '这条目前偏概念，需要补充具体客户场景、真实案例或更强冲突，否则容易变成普通知识分享。';
-      const anchorText = result.matchedAnchor
-        ? `参考历史 anchor：《${result.matchedAnchor.sample.title.slice(0, 22)}...》，匹配词：${result.matchedAnchor.overlap.join('、') || '弱匹配'}。`
-        : '当前没有命中历史 anchor，只按文本结构做粗估。';
-      document.getElementById('judgement').textContent = `${judgement} ${anchorText}`;
-
-      document.getElementById('hookPill').textContent = `开头冲突：${result.hasConflict ? '强' : '偏弱'}`;
-      document.getElementById('proofPill').textContent = `案例证据：${result.hasProof ? '有支撑' : '待补'}`;
-      document.getElementById('leadPill').textContent = `获客关联：${result.hasPain ? '强' : '不明显'}`;
-      document.getElementById('trustPill').textContent = `行动感：${result.hasAction ? '清晰' : '偏弱'}`;
-
-      document.getElementById('advice').textContent = result.hasProof
-        ? '保留现有证据，但把第一句话改得更像客户正在经历的问题。先让装修老板点头，再给方法。'
-        : '建议补一个真实业务锚点：比如咨询、到店、签单、施工进场或产值数据。没有证据时，预测会偏不稳定。';
-
-      document.getElementById('businessFit').textContent = result.hasPain
-        ? `匹配“精准痛点 → 信任建立 → 咨询转化”链路。${result.anchorLeads !== null ? `相近历史样本 T+3 咨询为 ${result.anchorLeads} 个，` : ''}结尾建议引导客户做账号诊断，而不是泛泛关注。`
-        : '当前与变现链路连接偏弱。需要明确这条内容最终想引导客户进入哪一步：诊断、咨询、训练营还是陪跑服务。';
-    }
-
-    function formatNum(num) {
-      if (num >= 10000) return (num / 10000).toFixed(1).replace('.0', '') + 'w';
-      return String(num);
-    }
-
-    function loadExample() {
-      draft.value = '装修老板做个人 IP 最大的问题，不是不会拍视频，而是一直把账号当广告位。你天天讲工艺、讲材料、讲优惠，客户看到以后只会继续问价格。真正能获客的内容，应该先让客户相信：你懂他的担心，也有能力帮他降低装修风险。过去我们陪跑 800+ 家顾销售和设计师 IP，真正进入签单链路的内容，往往不是播放最高的，而是最能筛选精准客户的。';
-      runPrediction();
-    }
-
-    function fillSampleExample() {
-      document.getElementById('sampleTitle').value = '有播放不等于有客户';
-      document.getElementById('sampleUrl').value = 'https://example.com/weiwu-video';
-      document.getElementById('sampleDate').valueAsDate = new Date();
-      document.getElementById('samplePlatform').value = 'douyin';
-      document.getElementById('sampleTranscript').value = '很多装修老板以为做个人 IP 就是把视频拍火，但真正能带来客户的内容，不一定是播放最高的，而是最能筛选精准客户的。';
-      document.getElementById('sampleViews').value = 12800;
-      document.getElementById('sampleLikes').value = 386;
-      document.getElementById('sampleComments').value = 42;
-      document.getElementById('sampleShares').value = 61;
-      document.getElementById('sampleLeads').value = 3;
-      document.getElementById('sampleConversion').value = 'lead';
-      document.getElementById('sampleNotes').value = '评论区有装修老板问账号定位，适合沉淀为精准获客类 anchor。';
-    }
-
-    function getSamples() {
-      try {
-        return JSON.parse(localStorage.getItem('weiwuHistoricalSamples') || '[]');
-      } catch (error) {
-        return [];
-      }
-    }
-
-    function setSamples(samples) {
-      localStorage.setItem('weiwuHistoricalSamples', JSON.stringify(samples));
-      renderSamples();
-    }
-
-    function numberValue(id) {
-      const value = document.getElementById(id).value;
-      return value === '' ? null : Number(value);
-    }
-
-    function saveSample() {
-      const title = document.getElementById('sampleTitle').value.trim();
-      const transcript = document.getElementById('sampleTranscript').value.trim();
-      if (!title || !transcript) {
-        alert('先填标题和逐字稿/核心内容，再保存。');
-        return;
-      }
-
-      const sample = {
-        id: `historical-${Date.now()}`,
-        type: 'historical_anchor_not_blind_prediction',
-        title,
-        url: document.getElementById('sampleUrl').value.trim(),
-        published_at: document.getElementById('sampleDate').value || null,
-        platform: document.getElementById('samplePlatform').value,
-        transcript,
-        t3_metrics: {
-          views: numberValue('sampleViews'),
-          likes: numberValue('sampleLikes'),
-          comments: numberValue('sampleComments'),
-          shares_or_saves: numberValue('sampleShares'),
-          leads_or_inquiries: numberValue('sampleLeads'),
-          conversion_status: document.getElementById('sampleConversion').value
-        },
-        notes: document.getElementById('sampleNotes').value.trim(),
-        privacy: 'desensitized_only',
-        created_at: new Date().toISOString()
-      };
-
-      const samples = getSamples();
-      samples.unshift(sample);
-      setSamples(samples);
-      clearSampleForm();
-      exportSamples(false);
-    }
-
-    function clearSampleForm() {
-      ['sampleTitle', 'sampleUrl', 'sampleDate', 'sampleTranscript', 'sampleViews', 'sampleLikes', 'sampleComments', 'sampleShares', 'sampleLeads', 'sampleNotes'].forEach((id) => {
-        document.getElementById(id).value = '';
-      });
-      document.getElementById('samplePlatform').value = 'douyin';
-      document.getElementById('sampleConversion').value = 'unknown';
-    }
-
-    function renderSamples() {
-      const samples = getSamples();
-      const list = document.getElementById('sampleList');
-      const counter = document.getElementById('sampleCounter');
-      counter.textContent = `${samples.length} / 3`;
-      if (!samples.length) {
-        list.className = 'sample-empty';
-        list.innerHTML = '还没有录入样本。建议先补 3 条：一条播放好、一条咨询好、一条表现一般但有代表性。';
-        return;
-      }
-
-      list.className = '';
-      list.innerHTML = samples.map((sample, index) => `
-        <article class="sample-card">
-          <h3>${index + 1}. ${escapeHtml(sample.title)}</h3>
-          <div class="sample-meta">
-            <span class="pill yellow">${platformLabel(sample.platform)}</span>
-            <span class="pill blue">T+3 播放 ${displayMetric(sample.t3_metrics.views)}</span>
-            <span class="pill green">咨询 ${displayMetric(sample.t3_metrics.leads_or_inquiries)}</span>
-            <span class="pill red">${conversionLabel(sample.t3_metrics.conversion_status)}</span>
-          </div>
-          <p>${escapeHtml(sample.transcript).slice(0, 120)}${sample.transcript.length > 120 ? '…' : ''}</p>
-        </article>
-      `).join('');
-    }
-
-    function exportSamples(showAlert = true) {
-      const payload = {
-        project: 'weiwu-content-warroom',
-        account: '唯吾',
-        exported_at: new Date().toISOString(),
-        sample_policy: 'historical anchors only; not blind predictions; safe for T+3 reference',
-        samples: getSamples()
-      };
-      const json = JSON.stringify(payload, null, 2);
-      document.getElementById('samplesJson').value = json;
-      if (showAlert) alert('JSON 已生成。你可以复制后直接发给艾玛斯。');
-      return json;
-    }
-
-    async function copySamplesJson() {
-      const json = exportSamples(false);
-      try {
-        await navigator.clipboard.writeText(json);
-        alert('已复制 JSON，可以直接粘贴发给艾玛斯。');
-      } catch (error) {
-        document.getElementById('samplesJson').select();
-        alert('浏览器不允许自动复制，请手动复制下方 JSON。');
-      }
-    }
-
-    function resetSamples() {
-      if (!confirm('确定清空这个浏览器里保存的历史样本吗？')) return;
-      localStorage.removeItem('weiwuHistoricalSamples');
-      document.getElementById('samplesJson').value = '';
-      renderSamples();
-    }
-
-    function displayMetric(value) {
-      return value === null || Number.isNaN(value) ? '未填' : value;
-    }
-
-    function platformLabel(platform) {
-      return ({ douyin: '抖音', xiaohongshu: '小红书', shipinhao: '视频号', other: '其他' })[platform] || platform;
-    }
-
-    function conversionLabel(status) {
-      return ({ unknown: '转化未知', none: '未进入成交链路', lead: '有有效咨询', deal: '已关联成交/产值' })[status] || status;
-    }
-
-    function escapeHtml(value) {
-      return String(value).replace(/[&<>'"]/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' })[char]);
-    }
-
-    async function loadHistoricalAnchors() {
-      try {
-        const response = await fetch('data/samples.json', { cache: 'no-store' });
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        const payload = await response.json();
-        historicalAnchors = payload.samples || [];
-        const note = document.getElementById('sampleSourceNote');
-        if (note) note.textContent = `重要边界：已接入 ${historicalAnchors.length} 条唯吾历史 anchor。它们只用于参考相似样本和 T+3 表现，不会被算作发布前盲预测校准样本。`;
-        runPrediction();
-      } catch (error) {
-        const note = document.getElementById('sampleSourceNote');
-        if (note) note.textContent = `重要边界：历史样本加载失败，当前退回文本结构粗估。错误：${error.message}`;
-        runPrediction();
-      }
-    }
-
-    loadExample();
-    renderSamples();
-    loadHistoricalAnchors();
-  </script>
+<script>
+let accountData=null;
+const fmt=(n)=>n===null||n===undefined?'—':n>=10000?(n/10000).toFixed(1).replace('.0','')+'w':String(n);
+const pct=(n,d)=>d?Math.round(n/d*1000)/10:0;
+const kw=['开工','成品','案例','工地','老板','设计师','业主','同行','咨询','信任','成交','亮点','无脚本','第一视角','拍摄','痛点','方法','服务'];
+function tokens(t){return kw.filter(k=>(t||'').includes(k));}
+function classifyWork(w){const text=w.desc||w.theme||'';if(/成品|案例|亮点/.test(text))return '案例拆解';if(/工地|开工|服务/.test(text))return '工地服务';if(/老板|痛点|同行|咨询|成交/.test(text))return '老板痛点';if(/GPT|AI|chatgpt/i.test(text))return '工具人设';return '其他';}
+function similarity(text,w){const a=tokens(text),b=tokens((w.desc||'')+(w.theme||''));return a.length?a.filter(x=>b.includes(x)).length/a.length:0;}
+async function loadData(){
+  const res=await fetch('data/weiwu-account.json',{cache:'no-store'}); accountData=await res.json(); renderAll();
+}
+function renderAll(){renderMetrics();renderWorks();renderStrategy();document.getElementById('sourceNote').textContent=`数据源：${accountData.source_type}，生成时间 ${accountData.generated_at}。RedFox 详情接口本轮 data=null，未作为实时源。`;runPredict();}
+function renderMetrics(){const a=accountData.account,m=accountData.metrics;const items=[['粉丝',a.follower_count,'blue'],['总获赞',a.total_favorited,'yellow'],['作品数',a.aweme_count,'green'],['6月播放',m.june_play_count,'red'],['6月点赞',m.june_likes,'yellow'],['平均播放',m.avg_play_count,'blue'],['最高播放',m.best_play_count,'green'],['互动合计',m.total_likes+m.total_comments+m.total_collects+m.total_shares,'red']];document.getElementById('metricGrid').innerHTML=items.map(i=>`<div class="metric ${i[2]}"><strong>${fmt(i[1])}</strong><span>${i[0]}</span></div>`).join('');}
+function renderWorks(){const works=accountData.june_works.slice().sort((a,b)=>b.play_count-a.play_count);document.getElementById('workList').innerHTML=works.map((w,i)=>`<article class="work"><div class="rank">${i+1}</div><div><div class="work-title">${w.theme}</div><div class="chips"><span class="chip">${classifyWork(w)}</span><span class="chip">赞 ${w.digg_count}</span><span class="chip">评 ${w.comment_count}</span><span class="chip">藏 ${w.collect_count}</span><span class="chip">转 ${w.share_count}</span></div></div><div class="work-score"><b>${fmt(w.play_count)}</b><br><span>播放</span></div></article>`).join('');const best=works[0], worst=works[works.length-1];document.getElementById('diagnosis').innerHTML=`<div class="card"><h3>当前不是内容没价值，是样本太少</h3><p>6月已抓到 ${works.length} 条作品，最高播放 ${fmt(best.play_count)}，最低播放 ${fmt(worst.play_count)}。现在不能用“感觉”判断方向，要按作品类型持续补样本。</p></div><div class="card" style="margin-top:14px"><h3>真正该追的不是产值展示</h3><p>作战台应追踪：播放趋势、点赞/收藏/分享、评论问题、粉丝变化、咨询数、哪类内容更接近成交。后端业务文档只负责定义“我们到底吸引谁”。</p></div>`;}
+function renderStrategy(){const s=accountData.strategy;const cards=[['继续放大',s.keep,'green'],['减少误区',s.reduce,'red'],['下一步动作',s.next_actions,'yellow']];document.getElementById('strategyCards').innerHTML=cards.map(c=>`<div class="card"><h3>${c[0]}</h3>${c[1].map(x=>`<p>• ${x}</p>`).join('')}</div>`).join('');}
+function estimate(text){const works=accountData?.works||[];let best=null;works.forEach(w=>{const sim=similarity(text,w);if(!best||sim>best.sim)best={w,sim}});const hasPain=/老板|客户|咨询|信任|成交|痛点|同行/.test(text);const hasProof=/案例|开工|工地|业主|真实|数据|播放|点赞/.test(text);const hasMethod=/怎么|方法|步骤|拆解|框架|逻辑|设计/.test(text);const score=Math.min(92,45+text.length/18+(hasPain?14:0)+(hasProof?12:0)+(hasMethod?9:0)+(best?best.sim*14:0));const base=best?.w?.play_count||accountData.metrics.avg_play_count||1800;const mid=Math.round(base*(score/70)*(0.8+(best?.sim||0)*0.7));return{score:Math.round(score),low:Math.max(300,Math.round(mid*.55)),high:Math.max(800,Math.round(mid*1.75)),best,hasPain,hasProof,hasMethod};}
+function runPredict(){if(!accountData)return;const text=document.getElementById('draft').value.trim();const box=document.getElementById('predictResult');if(!text){box.innerHTML='<h2>预测结果</h2><p class="muted">等待输入新稿。</p>';return;}const r=estimate(text);const anchor=r.best?.sim>0?`参考相近作品：《${r.best.w.theme.slice(0,28)}...》，该作品播放 ${fmt(r.best.w.play_count)}、点赞 ${r.best.w.digg_count}。`:'没有明显相近作品，只能按结构粗估。';const advice=[r.hasPain?'痛点明确':'补装修老板/设计师正在遇到的真实问题',r.hasProof?'有证据':'补真实现场/案例/数据',r.hasMethod?'方法感够':'补可执行步骤'];box.innerHTML=`<h2>预测结果</h2><div class="result-grid"><div class="result-box"><strong>${fmt(r.low)}-${fmt(r.high)}</strong><span>播放区间</span></div><div class="result-box"><strong>${r.score}</strong><span>内容分</span></div><div class="result-box"><strong>${Math.max(8,Math.min(70,Math.round((r.score-45)*1.25)))}%</strong><span>小爆概率</span></div></div><p>${anchor}</p><p>判断：${r.score>=78?'值得拍，但结尾必须接账号诊断/咨询动作。':r.score>=65?'可以拍，先加强开头具体痛点和案例证据。':'暂时不建议直接拍，容易变成泛知识。'}</p><p>修改清单：${advice.join(' / ')}</p>`;}
+function fillExample(){document.getElementById('draft').value='装修公司老板做个人 IP 最大的问题，不是不会拍，而是天天把账号当广告位。你讲材料、讲工艺、讲优惠，客户只会继续问价格。真正能带来咨询的内容，应该先把客户最担心的装修风险讲透，再用真实案例证明你能解决。';runPredict();}
+function makeTaskCard(){const text=document.getElementById('draft').value.trim();document.getElementById('taskCard').innerHTML=text?`<b>下一步闭环任务卡</b><p>状态：可进入发布前 blind prediction。请确认这就是终稿；确认后我会写入 scripts/，生成 predictions/ 预测文件。发布后 T+3 回填真实数据。</p>`:`<b>下一步闭环任务卡</b><p>先粘贴一条未发布的新稿，才能生成任务卡。</p>`;}
+document.getElementById('predictBtn').addEventListener('click',runPredict);document.getElementById('sampleBtn').addEventListener('click',fillExample);document.getElementById('refreshBtn').addEventListener('click',loadData);document.getElementById('lockBtn').addEventListener('click',makeTaskCard);document.getElementById('draft').addEventListener('input',runPredict);
+loadData().catch(e=>{document.getElementById('sourceNote').textContent='数据加载失败：'+e.message;});
+</script>
 </body>
 </html>

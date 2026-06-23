@@ -1,0 +1,180 @@
+{
+  "generated_at": "2026-06-09 12:27:43",
+  "source_file": "/Users/wave/dashboard/projects/douyin_account_monitoring/reports/single_weiwu_20260609/douyin_weekly_report_20260501_20260630.json",
+  "source_type": "local_douyin_monitor_report",
+  "redfox_status": "queryWork returned code=2000 but data=null for known workIds; not used as live source in V0.5",
+  "account": {
+    "name": "唯吾",
+    "nickname": "唯吾_IP运营_",
+    "unique_id": "27312081576",
+    "follower_count": 62,
+    "following_count": 7,
+    "aweme_count": 5,
+    "total_favorited": 320,
+    "homepage": "https://v.douyin.com/XvggnHt3svA/",
+    "sec_uid": "MS4wLjABAAAAMc4utP7mxY1rnhc5n4zgAM21Et5poBPt-sVKZaKjd5YbryOqrnSfn-mkNmdL6BR1"
+  },
+  "period": {
+    "start": "2026-05-01",
+    "end": "2026-06-30"
+  },
+  "works_total": 5,
+  "june_works_total": 3,
+  "metrics": {
+    "total_play_count": 9514,
+    "june_play_count": 6974,
+    "total_likes": 320,
+    "june_likes": 177,
+    "total_comments": 9,
+    "total_collects": 104,
+    "total_shares": 50,
+    "avg_play_count": 1903,
+    "best_play_count": 4788,
+    "best_like_count": 104
+  },
+  "content_positioning": {
+    "business_understanding": "唯吾是装修行业 IP 运营与内容获客服务，不是普通装修案例号；前端应反推账号定位与内容方向，而不是展示后端业务产值。",
+    "account_position": "装企个人 IP 操盘第一视角：把装修老板、设计师、销售不会拍/不会转化的问题，拆成现场可执行的方法。",
+    "north_star": "真实咨询与成交链路优先，播放和点赞用于判断内容放大价值，不作为唯一目标。"
+  },
+  "works": [
+    {
+      "aweme_id": "7648630720156642286",
+      "create_time": "2026-06-07 20:33:34",
+      "desc": "装修公司成品案例开篇怎么设计？ 第一视角无脚本现场引导成品案例开篇讲解，下期更新房子设计亮点框架梳理#装修公司 #老板IP #装修新媒体#成品案例 #设计师IP",
+      "theme": "装修公司成品案例开篇怎么设计？ 第一视角无脚本现场引导成品案例开篇讲解，下期更新房子设计亮点框架梳理",
+      "url": "https://www.douyin.com/video/7648630720156642286",
+      "digg_count": 104,
+      "comment_count": 3,
+      "collect_count": 70,
+      "share_count": 34,
+      "play_count": 4788,
+      "engagement_score": 321,
+      "ranking_score": 4788,
+      "ranking_basis": "play_count"
+    },
+    {
+      "aweme_id": "7639319320036641966",
+      "create_time": "2026-05-13 18:20:34",
+      "desc": "大型装修公司家装销售怎么打造自己的工地系列内容？ 今天分享一下我们陪跑的基础实操内容——工地服务日，手把手带小白员工工地现场落地#装企#装修公司#装修陪跑#装企营销#装修公司ip",
+      "theme": "大型装修公司家装销售怎么打造自己的工地系列内容？ 今天分享一下我们陪跑的基础实操内容——工地服务日，手把手带小白员工工地现场落地",
+      "url": "https://www.douyin.com/video/7639319320036641966",
+      "digg_count": 104,
+      "comment_count": 3,
+      "collect_count": 18,
+      "share_count": 8,
+      "play_count": 1738,
+      "engagement_score": 165,
+      "ranking_score": 1738,
+      "ranking_basis": "play_count"
+    },
+    {
+      "aweme_id": "7647867124766127706",
+      "create_time": "2026-06-05 19:10:27",
+      "desc": "第一视角成品案例无脚本开篇引导拍摄 装修公司成品案例开篇细节拍摄技巧，下期更新无脚本中间结构改造亮点梳理#装修公司#装修IP#老板IP#新媒体陪跑#点石家装",
+      "theme": "第一视角成品案例无脚本开篇引导拍摄 装修公司成品案例开篇细节拍摄技巧，下期更新无脚本中间结构改造亮点梳理",
+      "url": "https://www.douyin.com/video/7647867124766127706",
+      "digg_count": 57,
+      "comment_count": 0,
+      "collect_count": 6,
+      "share_count": 5,
+      "play_count": 1391,
+      "engagement_score": 79,
+      "ranking_score": 1391,
+      "ranking_basis": "play_count"
+    },
+    {
+      "aweme_id": "7635649253864156902",
+      "create_time": "2026-05-03 20:58:51",
+      "desc": "GPT还是太顶级了。#ai#ai生图 #雪山攀登者 #image #chatgpt",
+      "theme": "GPT还是太顶级了。",
+      "url": "https://www.douyin.com/video/7635649253864156902",
+      "digg_count": 39,
+      "comment_count": 1,
+      "collect_count": 6,
+      "share_count": 0,
+      "play_count": 802,
+      "engagement_score": 54,
+      "ranking_score": 802,
+      "ranking_basis": "play_count"
+    },
+    {
+      "aweme_id": "7648932430510773107",
+      "create_time": "2026-06-08 16:04:21",
+      "desc": "装修公司成品案例设计亮点改造到底怎么讲？ 第一视角带你梳理设计亮点改造输出逻辑#装修公司#装修公司新媒体#设计师IP#装企#短视频运营",
+      "theme": "装修公司成品案例设计亮点改造到底怎么讲？ 第一视角带你梳理设计亮点改造输出逻辑",
+      "url": "https://www.douyin.com/video/7648932430510773107",
+      "digg_count": 16,
+      "comment_count": 2,
+      "collect_count": 4,
+      "share_count": 3,
+      "play_count": 795,
+      "engagement_score": 36,
+      "ranking_score": 795,
+      "ranking_basis": "play_count"
+    }
+  ],
+  "june_works": [
+    {
+      "aweme_id": "7648932430510773107",
+      "create_time": "2026-06-08 16:04:21",
+      "desc": "装修公司成品案例设计亮点改造到底怎么讲？ 第一视角带你梳理设计亮点改造输出逻辑#装修公司#装修公司新媒体#设计师IP#装企#短视频运营",
+      "theme": "装修公司成品案例设计亮点改造到底怎么讲？ 第一视角带你梳理设计亮点改造输出逻辑",
+      "url": "https://www.douyin.com/video/7648932430510773107",
+      "digg_count": 16,
+      "comment_count": 2,
+      "collect_count": 4,
+      "share_count": 3,
+      "play_count": 795,
+      "engagement_score": 36,
+      "ranking_score": 795,
+      "ranking_basis": "play_count"
+    },
+    {
+      "aweme_id": "7648630720156642286",
+      "create_time": "2026-06-07 20:33:34",
+      "desc": "装修公司成品案例开篇怎么设计？ 第一视角无脚本现场引导成品案例开篇讲解，下期更新房子设计亮点框架梳理#装修公司 #老板IP #装修新媒体#成品案例 #设计师IP",
+      "theme": "装修公司成品案例开篇怎么设计？ 第一视角无脚本现场引导成品案例开篇讲解，下期更新房子设计亮点框架梳理",
+      "url": "https://www.douyin.com/video/7648630720156642286",
+      "digg_count": 104,
+      "comment_count": 3,
+      "collect_count": 70,
+      "share_count": 34,
+      "play_count": 4788,
+      "engagement_score": 321,
+      "ranking_score": 4788,
+      "ranking_basis": "play_count"
+    },
+    {
+      "aweme_id": "7647867124766127706",
+      "create_time": "2026-06-05 19:10:27",
+      "desc": "第一视角成品案例无脚本开篇引导拍摄 装修公司成品案例开篇细节拍摄技巧，下期更新无脚本中间结构改造亮点梳理#装修公司#装修IP#老板IP#新媒体陪跑#点石家装",
+      "theme": "第一视角成品案例无脚本开篇引导拍摄 装修公司成品案例开篇细节拍摄技巧，下期更新无脚本中间结构改造亮点梳理",
+      "url": "https://www.douyin.com/video/7647867124766127706",
+      "digg_count": 57,
+      "comment_count": 0,
+      "collect_count": 6,
+      "share_count": 5,
+      "play_count": 1391,
+      "engagement_score": 79,
+      "ranking_score": 1391,
+      "ranking_basis": "play_count"
+    }
+  ],
+  "strategy": {
+    "keep": [
+      "第一视角无脚本引导",
+      "成品案例开篇/亮点拆解",
+      "工地服务与开工现场的真实问题"
+    ],
+    "reduce": [
+      "泛 AI 热点和与装企获客弱关联的人设内容",
+      "只讲后端服务产值而不展示账号内容表现"
+    ],
+    "next_actions": [
+      "补齐 6 月所有作品后台播放量与咨询数",
+      "把每条作品归类为：案例拆解/工地服务/老板痛点/成交信任/工具人设",
+      "下一条新稿先做发布前 blind prediction，再 T+3 回填"
+    ]
+  }
+}
