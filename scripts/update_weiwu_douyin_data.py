@@ -115,8 +115,36 @@ def enriched_work(sample: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def load_published_baseline() -> dict[str, Any] | None:
+    """Read the last verified front-end snapshot before replacing it."""
+    if not ACCOUNT_OUT.exists():
+        return None
+    try:
+        return json.loads(ACCOUNT_OUT.read_text(encoding='utf-8'))
+    except (OSError, json.JSONDecodeError):
+        return None
+
+
+def validate_capture_for_publish(result: dict[str, Any], baseline: dict[str, Any] | None) -> None:
+    """Reject incomplete captures so a crawler outage cannot publish zeros."""
+    works = result.get('works') or []
+    if not works:
+        raise ValueError('publish blocked: crawler returned zero works; retained the last verified snapshot')
+
+    previous_works = int((baseline or {}).get('works_total') or 0)
+    previous_views = int(((baseline or {}).get('metrics') or {}).get('total_play_count') or 0)
+    captured_views = sum(int(item.get('play_count') or 0) for item in works)
+    if previous_works and len(works) < previous_works:
+        raise ValueError(
+            f'publish blocked: captured {len(works)} works below verified baseline {previous_works}; retained the last verified snapshot'
+        )
+    if previous_views and captured_views <= 0:
+        raise ValueError('publish blocked: crawler returned zero total views; retained the last verified snapshot')
+
+
 def write_outputs(raw_payload: dict[str, Any]) -> dict[str, Any]:
     result = raw_payload['result']
+    validate_capture_for_publish(result, load_published_baseline())
     profile = result.get('profile') or {}
     works = result.get('works') or []
     samples = sorted([as_sample(work) for work in works], key=lambda item: item['created_time'] or '', reverse=True)

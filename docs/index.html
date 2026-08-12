@@ -1,106 +1,432 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>唯吾内容作战台 · V0.7</title>
-  <style>
-    :root{--bg:#f7f1e8;--ink:#161616;--muted:#706b62;--card:#fffaf0;--line:#191919;--red:#ef4444;--yellow:#f8c14a;--green:#22c55e;--blue:#3b82f6;--purple:#8b5cf6;--shadow:6px 6px 0 #151515}
-    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 10% 10%,#fff6d6 0 18%,transparent 19%),linear-gradient(135deg,#f7f1e8,#ede2d2);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif}.wrap{width:min(1180px,94vw);margin:auto;padding:24px 0 54px}.nav{position:sticky;top:12px;z-index:10;display:flex;justify-content:space-between;align-items:center;background:rgba(255,250,240,.92);backdrop-filter:blur(14px);border:2px solid var(--line);border-radius:20px;padding:12px 16px;box-shadow:var(--shadow)}.brand{display:flex;gap:10px;align-items:center;font-weight:900}.mark{width:34px;height:34px;border:2px solid var(--line);border-radius:10px;background:var(--yellow);display:grid;place-items:center}.nav a{color:var(--ink);text-decoration:none;font-weight:800;margin-left:14px}.hero{display:grid;grid-template-columns:1.08fr .92fr;gap:22px;margin:28px 0}.panel,.card{background:var(--card);border:2px solid var(--line);border-radius:26px;box-shadow:var(--shadow);padding:24px}.kicker{display:inline-flex;gap:8px;align-items:center;border:2px solid var(--line);border-radius:999px;padding:7px 12px;background:#fff;font-weight:900}.kicker b{color:var(--red)}h1{font-size:clamp(34px,5vw,64px);line-height:.98;margin:18px 0 12px;letter-spacing:-2px}h2{font-size:clamp(26px,3vw,40px);margin:0 0 10px}h3{margin:0 0 10px}.lead{font-size:18px;color:var(--muted);line-height:1.7}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.metric{background:#fff;border:2px solid var(--line);border-radius:18px;padding:16px}.metric strong{display:block;font-size:30px}.metric span{color:var(--muted);font-weight:800}.metric.red{background:#ffe1dc}.metric.yellow{background:#fff1bc}.metric.green{background:#daf8df}.metric.blue{background:#dceafe}.section{margin-top:24px}.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}.three{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.work{display:grid;grid-template-columns:80px 1fr auto;gap:14px;align-items:start;background:#fff;border:2px solid var(--line);border-radius:20px;padding:14px;margin:12px 0}.rank{height:56px;border:2px solid var(--line);border-radius:16px;background:var(--yellow);display:grid;place-items:center;font-size:24px;font-weight:950}.work-title{font-weight:950;line-height:1.35}.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.chip{border:1.5px solid var(--line);border-radius:999px;background:#fff;padding:4px 9px;font-size:12px;font-weight:850}.work-score{text-align:right;font-weight:950}.work-score b{font-size:24px}textarea,input,select{width:100%;border:2px solid var(--line);border-radius:18px;background:#fffdf8;padding:14px;font:inherit}textarea{min-height:190px;resize:vertical}button{border:2px solid var(--line);border-radius:999px;background:var(--yellow);padding:12px 18px;font-weight:950;cursor:pointer;box-shadow:4px 4px 0 #151515}button:hover{transform:translate(2px,2px);box-shadow:2px 2px 0 #151515}.btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}.secondary{background:#fff}.danger{background:#ffd7d7}.note{font-size:13px;line-height:1.7;color:var(--muted);margin-top:12px}.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}.step{background:#fff;border:2px dashed var(--line);border-radius:18px;padding:14px}.step b{display:block}.result{background:#161616;color:#fff;border-radius:22px;padding:20px}.result .muted{color:#c9c3b8}.result-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0}.result-box{border:1px solid #555;border-radius:16px;padding:12px}.result-box strong{display:block;font-size:24px}.split{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}.sample-list{max-height:420px;overflow:auto}.footer{margin-top:26px;padding:18px;border:2px solid var(--line);border-radius:20px;background:#fff}.hidden{display:none}@media(max-width:900px){.hero,.two,.three,.split{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,1fr)}.flow{grid-template-columns:1fr}.nav{align-items:flex-start;gap:10px;flex-direction:column}.nav a{margin:0 10px 0 0}.work{grid-template-columns:56px 1fr}.work-score{grid-column:2;text-align:left}}
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>唯吾 · 内容工作台</title>
+<style>
+:root{
+  --bg:#070a10;--bg-2:#0c111b;--panel:#101826;--panel-2:#141d2c;
+  --line:rgba(255,255,255,.08);--line-2:rgba(255,255,255,.14);
+  --text:#e8edf4;--muted:#8b96a5;--dim:#5d6878;
+  --accent:#5b8cff;--accent-2:#22d3ee;
+  --good:#34d399;--warn:#fbbf24;--bad:#f87171;
+  --mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,Consolas,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  --r:16px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:15px;line-height:1.6;
+  background-image:radial-gradient(900px 500px at 85% -10%,rgba(91,140,255,.14),transparent 60%),
+  radial-gradient(700px 420px at -10% 20%,rgba(34,211,238,.10),transparent 55%);
+  background-attachment:fixed;-webkit-font-smoothing:antialiased}
+a{color:var(--accent-2);text-decoration:none}
+a:hover{text-decoration:underline}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:8px}
+::-webkit-scrollbar-track{background:transparent}
+
+.shell{display:grid;grid-template-columns:236px 1fr;min-height:100vh}
+.rail{position:sticky;top:0;height:100vh;padding:22px 16px;border-right:1px solid var(--line);
+  background:rgba(12,17,27,.7);backdrop-filter:blur(18px);display:flex;flex-direction:column;gap:4px}
+.brand{display:flex;align-items:center;gap:10px;padding:2px 8px 20px}
+.brand .dot{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-2));
+  display:grid;place-items:center;font-weight:800;color:#04101f;box-shadow:0 0 24px rgba(91,140,255,.4)}
+.brand .name{font-weight:700;font-size:15px;letter-spacing:.2px}
+.brand .sub{font-size:11px;color:var(--dim);font-family:var(--mono)}
+.rail a.nav{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:11px;color:var(--muted);
+  font-weight:600;font-size:14px;transition:.15s}
+.rail a.nav:hover{background:rgba(255,255,255,.04);color:var(--text)}
+.rail a.nav.active{background:rgba(91,140,255,.14);color:var(--text)}
+.rail a.nav .ico{width:16px;text-align:center;opacity:.8}
+.rail .spacer{flex:1}
+.rail .foot{padding:10px 12px;font-size:11px;color:var(--dim);font-family:var(--mono);line-height:1.5}
+
+.main{max-width:1180px;width:100%;margin:0 auto;padding:26px 28px 70px}
+.topbar{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:24px}
+.topbar h1{font-size:26px;margin:0;letter-spacing:-.5px;font-weight:800}
+.topbar .sub{color:var(--muted);font-size:13px;margin-top:4px}
+.pill{display:inline-flex;align-items:center;gap:7px;padding:6px 12px;border-radius:999px;font-size:12px;
+  font-weight:600;border:1px solid var(--line-2);background:var(--panel-2);font-family:var(--mono)}
+.pill .led{width:7px;height:7px;border-radius:50%;background:var(--good);box-shadow:0 0 8px var(--good)}
+.pill.warn .led{background:var(--warn);box-shadow:0 0 8px var(--warn)}
+.pill.bad .led{background:var(--bad);box-shadow:0 0 8px var(--bad)}
+
+.grid-kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:14px}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;position:relative;overflow:hidden}
+.kpi .lbl{font-size:12px;color:var(--muted);font-weight:600}
+.kpi .val{font-size:28px;font-weight:800;font-family:var(--mono);letter-spacing:-1px;margin-top:2px;line-height:1.1}
+.kpi .delta{font-size:11px;color:var(--dim);margin-top:4px}
+.kpi .glow{position:absolute;right:-20px;top:-20px;width:80px;height:80px;border-radius:50%;
+  background:radial-gradient(circle,var(--accent),transparent 70%);opacity:.12;filter:blur(6px)}
+
+.section{margin-top:26px}
+.sec-head{display:flex;align-items:baseline;gap:10px;margin-bottom:12px}
+.sec-head h2{font-size:17px;margin:0;font-weight:700}
+.sec-head .hint{font-size:12px;color:var(--dim)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:18px}
+.card+.card{margin-top:14px}
+
+.health{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+.health .cell .k{font-size:12px;color:var(--muted)}
+.health .cell .v{font-family:var(--mono);font-weight:700;font-size:15px}
+.status-tag{display:inline-block;padding:2px 9px;border-radius:7px;font-size:11px;font-weight:700}
+.status-tag.ok{background:rgba(52,211,153,.14);color:var(--good)}
+.status-tag.warn{background:rgba(251,191,36,.14);color:var(--warn)}
+.status-tag.bad{background:rgba(248,113,113,.14);color:var(--bad)}
+
+.works{display:flex;flex-direction:column;gap:10px}
+.work{display:flex;align-items:center;gap:14px;padding:13px 15px;background:var(--panel-2);border:1px solid var(--line);
+  border-radius:13px;transition:.15s}
+.work:hover{border-color:var(--line-2)}
+.work .rank{width:30px;height:30px;flex:none;border-radius:9px;display:grid;place-items:center;font-family:var(--mono);
+  font-weight:800;font-size:13px;color:var(--dim);background:rgba(255,255,255,.03)}
+.work .rank.top{color:#04101f;background:linear-gradient(135deg,var(--accent),var(--accent-2))}
+.work .meta{flex:1;min-width:0}
+.work .t{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.work .tags{display:flex;gap:6px;margin-top:4px;flex-wrap:wrap}
+.chip{font-size:11px;padding:1px 8px;border-radius:6px;background:rgba(91,140,255,.12);color:#a8c1ff;font-weight:600}
+.chip.angle{background:rgba(34,211,238,.12);color:#7fe3f5}
+.work .nums{flex:none;text-align:right;font-family:var(--mono)}
+.work .nums .play{font-size:16px;font-weight:800}
+.work .nums .eng{font-size:11px;color:var(--dim)}
+.work a{font-size:12px;color:var(--muted)}
+
+.split{display:grid;grid-template-columns:1.15fr .85fr;gap:16px}
+textarea{width:100%;min-height:130px;background:var(--bg-2);border:1px solid var(--line-2);border-radius:12px;
+  color:var(--text);padding:14px;font-family:var(--sans);font-size:14px;resize:vertical;line-height:1.7}
+textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(91,140,255,.15)}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:11px;font-weight:700;font-size:13px;
+  cursor:pointer;border:1px solid transparent;transition:.15s;font-family:var(--sans)}
+.btn.pri{background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#04101f}
+.btn.pri:hover{filter:brightness(1.08)}
+.btn.ghost{background:transparent;border-color:var(--line-2);color:var(--text)}
+.btn.ghost:hover{background:rgba(255,255,255,.05)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btnrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+
+.queue-item{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--panel-2);
+  border:1px solid var(--line);border-radius:12px;margin-bottom:9px}
+.queue-item .chk{width:20px;height:20px;flex:none;border-radius:6px;border:1.5px solid var(--line-2);
+  cursor:pointer;display:grid;place-items:center;transition:.15s;background:transparent}
+.queue-item .chk.done{background:var(--good);border-color:var(--good)}
+.queue-item .chk.done::after{content:'✓';font-size:12px;color:#04101f;font-weight:800}
+.queue-item .body{flex:1;min-width:0}
+.queue-item .body .txt{font-size:14px;font-weight:500}
+.queue-item .body .txt.done{color:var(--dim);text-decoration:line-through}
+.queue-item .body .tag{font-size:11px;color:var(--dim);font-family:var(--mono)}
+.queue-item .del{flex:none;color:var(--dim);cursor:pointer;font-size:15px;padding:2px 6px;border-radius:6px}
+.queue-item .del:hover{color:var(--bad);background:rgba(248,113,113,.12)}
+.queue-add{display:flex;gap:10px}
+.queue-add input{flex:1;background:var(--bg-2);border:1px solid var(--line-2);border-radius:11px;color:var(--text);
+  padding:10px 13px;font-size:13px;font-family:var(--sans)}
+.queue-add input:focus{outline:none;border-color:var(--accent)}
+
+.result-box{background:var(--bg-2);border:1px solid var(--line);border-radius:12px;padding:13px 15px}
+.result-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0}
+.result-grid .k{font-family:var(--mono);font-size:20px;font-weight:800}
+.result-grid .l{font-size:11px;color:var(--muted)}
+.muted{color:var(--muted)}
+h3{font-size:14px;margin:16px 0 6px}
+ol.flow{list-style:none;counter-reset:s;display:flex;gap:10px;flex-wrap:wrap;padding:0;margin:14px 0}
+ol.flow li{counter-increment:s;background:var(--panel-2);border:1px solid var(--line);border-radius:11px;
+  padding:10px 14px;font-size:13px;flex:1;min-width:130px}
+ol.flow li b{display:block;color:var(--accent-2);font-family:var(--mono);font-size:12px}
+ol.flow li b::before{content:counter(s)" "}
+
+.note{font-size:12px;color:var(--dim);margin-top:10px;line-height:1.6}
+.empty{padding:28px;text-align:center;color:var(--dim);font-size:13px}
+
+@media(max-width:900px){
+  body{overflow-x:hidden}
+  .shell{grid-template-columns:1fr;min-width:0}
+  .rail{position:sticky;top:0;height:auto;flex-direction:row;align-items:center;overflow-x:auto;
+    border-right:none;border-bottom:1px solid var(--line);padding:10px 12px;gap:6px;z-index:20;
+    width:100%;min-width:0;max-width:100vw}
+  .rail .brand{padding:0 6px 0 0;flex:none}
+  .rail .brand .sub{display:none}
+  .rail a.nav{flex:none;padding:8px 11px;font-size:13px}
+  .rail .spacer,.rail .foot{display:none}
+  .main{padding:18px 16px 60px;min-width:0;max-width:100%}
+  .grid-kpi{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .health{grid-template-columns:1fr}
+  .split{grid-template-columns:1fr}
+  .topbar{flex-direction:column}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
 </head>
 <body>
-  <main class="wrap">
-    <nav class="nav">
-      <div class="brand"><div class="mark">吾</div><div>唯吾内容作战台 V0.7</div></div>
-      <div><a href="#account">账号</a><a href="#works">作品</a><a href="#strategy">方向</a><a href="#predict">预测</a><a href="#loop">闭环</a></div>
-    </nav>
+<div class="shell">
+  <aside class="rail">
+    <div class="brand"><div class="dot">吾</div><div><div class="name">唯吾 · 内容工作台</div><div class="sub">WEIWU OS</div></div></div>
+    <a class="nav active" href="#today"><span class="ico">◷</span>今日</a>
+    <a class="nav" href="#account"><span class="ico">◔</span>账号</a>
+    <a class="nav" href="#works"><span class="ico">▤</span>作品</a>
+    <a class="nav" href="#queue"><span class="ico">☑</span>队列</a>
+    <a class="nav" href="#predict"><span class="ico">◈</span>预测</a>
+    <a class="nav" href="#review"><span class="ico">↻</span>复盘</a>
+    <div class="spacer"></div>
+    <div class="foot" id="railFoot">本地工作台<br>数据源：F2 抖音快照</div>
+  </aside>
 
-    <section class="hero" id="account">
-      <div class="panel">
-        <div class="kicker">当前阶段 <b>基础数据闭环</b></div>
-        <h1>先看账号表现，再决定下一条拍什么。</h1>
-        <p class="lead">这里先跑通最基础的一层：粉丝、获赞、作品数、播放、点赞、评论、收藏、分享。先让数据自动更新、页面自动吃数、预测按钮能形成任务卡；私信和咨询数据后面再接。</p>
-        <div class="btns"><button id="refreshBtn">刷新页面数据</button><button class="secondary" id="sampleBtn">填入新稿示例</button></div>
-        <div class="note" id="sourceNote">正在加载账号数据...</div>
+  <main class="main">
+    <div class="topbar" id="today">
+      <div>
+        <h1>今天该拍什么、该回填什么</h1>
+        <div class="sub">账号表现 → 内容队列 → 发布 → T+3 回填 → 复盘，一条线。</div>
       </div>
-      <div class="panel">
-        <h2>账号实时概览</h2>
-        <div class="grid" id="metricGrid"></div>
-      </div>
-    </section>
+      <div class="pill" id="healthPill"><span class="led"></span><span id="healthPillTxt">加载中…</span></div>
+    </div>
 
-    <section class="section" id="works">
-      <div class="two">
-        <div class="panel">
-          <h2>6 月作品表现</h2>
-          <p class="lead">这里展示已抓到的 6 月作品基础表现：播放、点赞、评论、收藏、分享。先用这些指标判断内容方向是否值得继续放大。</p>
-          <div id="workList"></div>
+    <div class="grid-kpi" id="kpiGrid"></div>
+
+    <div class="section" id="account">
+      <div class="sec-head"><h2>账号健康</h2><span class="hint">抓取快照 vs 主页口径</span></div>
+      <div class="card health" id="healthBox"></div>
+    </div>
+
+    <div class="section" id="works">
+      <div class="sec-head"><h2>作品表现</h2><span class="hint" id="worksHint"></span></div>
+      <div class="works" id="workList"></div>
+    </div>
+
+    <div class="section" id="queue">
+      <div class="sec-head"><h2>今日队列</h2><span class="hint">本机保存 · 勾选即完成 · 不覆盖云端数据</span></div>
+      <div class="card">
+        <div class="queue-add">
+          <input id="queueInput" type="text" placeholder="加一条：选题 / 脚本 / 拍摄 / 发布 / 回填 / 复盘…" />
+          <button class="btn pri" id="queueAddBtn">+ 添加</button>
         </div>
-        <div class="panel">
-          <h2>表现诊断</h2>
-          <div id="diagnosis"></div>
+        <div id="queueList" style="margin-top:14px"></div>
+      </div>
+    </div>
+
+    <div class="section" id="predict">
+      <div class="sec-head"><h2>发布前预测</h2><span class="hint">先快判，再深度预测</span></div>
+      <div class="split">
+        <div class="card">
+          <textarea id="draft" placeholder="粘贴下一条还没发布的终稿…"></textarea>
+          <div class="btnrow">
+            <button class="btn ghost" id="sampleBtn">填入示例</button>
+            <button class="btn pri" id="predictBtn">快速预判</button>
+            <button class="btn ghost" id="deepPredictBtn">模型深度预测</button>
+            <button class="btn ghost" id="lockBtn">生成闭环任务卡</button>
+          </div>
+          <p class="note">快速预判在浏览器本地完成；模型深度预测只调用本机 <span style="font-family:var(--mono)">127.0.0.1:8787</span> 网关，不在前端存 Key。旧作品只作历史 anchor，新稿发布前预测才是 blind prediction。</p>
+        </div>
+        <div class="card" id="predictResult">
+          <h3 style="margin-top:0">预测结果</h3>
+          <p class="muted">等待输入新稿。</p>
         </div>
       </div>
-    </section>
+    </div>
 
-    <section class="section" id="strategy">
-      <h2>内容方向作战台</h2>
-      <div class="three" id="strategyCards"></div>
-    </section>
-
-    <section class="section split" id="predict">
-      <div class="panel">
-        <h2>发布前预测</h2>
-        <p class="lead">把下一条“还没发布”的终稿粘进来。先用前端做 1 秒快判；需要更认真时，再点“模型深度预测”，由本机安全网关读取历史样本和 rubric 后调用模型分析。</p>
-        <textarea id="draft" placeholder="粘贴下一条准备发布的新稿终稿。"></textarea>
-        <div class="btns"><button id="predictBtn">生成快速预判</button><button class="secondary" id="deepPredictBtn">模型深度预测</button><button class="secondary" id="lockBtn">生成闭环任务卡</button></div>
-        <div class="note">边界：快速预判在浏览器本地完成；模型深度预测只调用本机 `127.0.0.1` 网关，不在前端存放模型 Key。旧作品只能当 historical anchor；新稿发布前预测才是 blind prediction。</div>
+    <div class="section" id="review">
+      <div class="sec-head"><h2>完整循环</h2></div>
+      <div class="card">
+        <ol class="flow">
+          <li><b>新稿</b>输入未发布终稿</li>
+          <li><b>预测</b>锁定 blind prediction</li>
+          <li><b>发布</b>登记链接和时间</li>
+          <li><b>T+3</b>回填播放/互动</li>
+          <li><b>进化</b>修正 rubric 与方向</li>
+        </ol>
+        <div id="taskCard"></div>
       </div>
-      <div class="result" id="predictResult">
-        <h2>预测结果</h2>
-        <p class="muted">等待输入新稿。</p>
-      </div>
-    </section>
-
-    <section class="section" id="loop">
-      <div class="panel">
-        <h2>完整循环怎么跑</h2>
-        <div class="flow">
-          <div class="step"><b>1 新稿</b><span>输入未发布终稿</span></div>
-          <div class="step"><b>2 预测</b><span>锁定 blind prediction</span></div>
-          <div class="step"><b>3 发布</b><span>登记链接和时间</span></div>
-          <div class="step"><b>4 T+3</b><span>回填播放/互动</span></div>
-          <div class="step"><b>5 进化</b><span>修正 rubric 和方向</span></div>
-        </div>
-        <div class="footer" id="taskCard"></div>
-      </div>
-    </section>
+    </div>
   </main>
+</div>
 
 <script>
 let accountData=null;
 const fmt=(n)=>n===null||n===undefined?'—':n>=10000?(n/10000).toFixed(1).replace('.0','')+'w':String(n);
-const pct=(n,d)=>d?Math.round(n/d*1000)/10:0;
-const kw=['开工','成品','案例','工地','老板','设计师','业主','同行','咨询','信任','成交','亮点','无脚本','第一视角','拍摄','痛点','方法','服务'];
-function tokens(t){return kw.filter(k=>(t||'').includes(k));}
-function classifyWork(w){const text=w.desc||w.theme||'';if(/成品|案例|亮点/.test(text))return '案例拆解';if(/工地|开工|服务/.test(text))return '工地服务';if(/老板|痛点|同行|咨询|成交/.test(text))return '老板痛点';if(/GPT|AI|chatgpt/i.test(text))return '工具人设';return '其他';}
-function similarity(text,w){const a=tokens(text),b=tokens((w.desc||'')+(w.theme||''));return a.length?a.filter(x=>b.includes(x)).length/a.length:0;}
-async function loadData(){
-  const res=await fetch('data/weiwu-account.json',{cache:'no-store'}); accountData=await res.json(); renderAll();
+const fmtInt=(n)=>n===null||n===undefined?'—':Number(n).toLocaleString('zh-CN');
+
+// ---------- 今日队列（localStorage 持久化） ----------
+const QKEY='weiwu_os_queue_v1';
+function loadQueue(){try{return JSON.parse(localStorage.getItem(QKEY))||[]}catch(e){return[]}}
+function saveQueue(q){try{localStorage.setItem(QKEY,JSON.stringify(q))}catch(e){}}
+let queue=loadQueue();
+function renderQueue(){
+  const el=document.getElementById('queueList');
+  if(!queue.length){el.innerHTML='<div class="empty">队列是空的，先加一条今天的动作。</div>';return;}
+  el.innerHTML=queue.map((it,i)=>`
+    <div class="queue-item">
+      <div class="chk ${it.done?'done':''}" data-i="${i}"></div>
+      <div class="body"><div class="txt ${it.done?'done':''}">${esc(it.text)}</div><div class="tag">${esc(it.stage||'')} · ${it.ts||''}</div></div>
+      <div class="del" data-del="${i}" title="删除">×</div>
+    </div>`).join('');
+  el.querySelectorAll('.chk').forEach(c=>c.addEventListener('click',()=>{queue[c.dataset.i].done=!queue[c.dataset.i].done;saveQueue(queue);renderQueue();}));
+  el.querySelectorAll('.del').forEach(d=>d.addEventListener('click',()=>{queue.splice(d.dataset.del,1);saveQueue(queue);renderQueue();}));
 }
-function renderAll(){renderMetrics();renderWorks();renderStrategy();const a=accountData.account;document.getElementById('sourceNote').textContent=`数据已更新：${accountData.generated_at}。当前抓到 ${accountData.works_total} 条历史作品，抖音主页显示 ${a.aweme_count} 条；基础数据闭环已接入。`;runPredict();}
-function renderMetrics(){const a=accountData.account,m=accountData.metrics;const items=[['粉丝',a.follower_count,'blue'],['总获赞',a.total_favorited,'yellow'],['作品数',a.aweme_count,'green'],['6月播放',m.june_play_count,'red'],['6月点赞',m.june_likes,'yellow'],['平均播放',m.avg_play_count,'blue'],['最高播放',m.best_play_count,'green'],['互动合计',m.total_likes+m.total_comments+m.total_collects+m.total_shares,'red']];document.getElementById('metricGrid').innerHTML=items.map(i=>`<div class="metric ${i[2]}"><strong>${fmt(i[1])}</strong><span>${i[0]}</span></div>`).join('');}
-function renderWorks(){const works=accountData.june_works.slice().sort((a,b)=>b.play_count-a.play_count);document.getElementById('workList').innerHTML=works.map((w,i)=>`<article class="work"><div class="rank">${i+1}</div><div><div class="work-title">${w.theme}</div><div class="chips"><span class="chip">${classifyWork(w)}</span><span class="chip">赞 ${w.digg_count}</span><span class="chip">评 ${w.comment_count}</span><span class="chip">藏 ${w.collect_count}</span><span class="chip">转 ${w.share_count}</span></div></div><div class="work-score"><b>${fmt(w.play_count)}</b><br><span>播放</span></div></article>`).join('');const best=works[0], worst=works[works.length-1];document.getElementById('diagnosis').innerHTML=`<div class="card"><h3>先把基础数据跑稳</h3><p>6 月已抓到 ${works.length} 条作品，最高播放 ${fmt(best.play_count)}，最低播放 ${fmt(worst.play_count)}。现阶段先看播放、点赞、收藏、分享和评论变化。</p></div><div class="card" style="margin-top:14px"><h3>下一步看内容类型</h3><p>把作品按“开工/工地、成品案例、老板痛点、工具人设”分组，对比哪类内容更容易获得播放和互动，再决定下一条拍什么。</p></div>`;}
-function renderStrategy(){const s=accountData.strategy;const cards=[['继续放大',s.keep,'green'],['减少误区',s.reduce,'red'],['下一步动作',s.next_actions,'yellow']];document.getElementById('strategyCards').innerHTML=cards.map(c=>`<div class="card"><h3>${c[0]}</h3>${c[1].map(x=>`<p>• ${x}</p>`).join('')}</div>`).join('');}
-function estimate(text){const works=accountData?.works||[];let best=null;works.forEach(w=>{const sim=similarity(text,w);if(!best||sim>best.sim)best={w,sim}});const hasPain=/老板|客户|咨询|信任|成交|痛点|同行/.test(text);const hasProof=/案例|开工|工地|业主|真实|数据|播放|点赞/.test(text);const hasMethod=/怎么|方法|步骤|拆解|框架|逻辑|设计/.test(text);const score=Math.min(92,45+text.length/18+(hasPain?14:0)+(hasProof?12:0)+(hasMethod?9:0)+(best?best.sim*14:0));const base=best?.w?.play_count||accountData.metrics.avg_play_count||1800;const mid=Math.round(base*(score/70)*(0.8+(best?.sim||0)*0.7));return{score:Math.round(score),low:Math.max(300,Math.round(mid*.55)),high:Math.max(800,Math.round(mid*1.75)),best,hasPain,hasProof,hasMethod};}
-function runPredict(){if(!accountData)return;const text=document.getElementById('draft').value.trim();const box=document.getElementById('predictResult');if(!text){box.innerHTML='<h2>预测结果</h2><p class="muted">等待输入新稿。</p>';return;}const r=estimate(text);const anchor=r.best?.sim>0?`参考相近作品：《${r.best.w.theme.slice(0,28)}...》，该作品播放 ${fmt(r.best.w.play_count)}、点赞 ${r.best.w.digg_count}。`:'没有明显相近作品，只能按结构粗估。';const advice=[r.hasPain?'痛点明确':'补装修老板/设计师正在遇到的真实问题',r.hasProof?'有证据':'补真实现场/案例/数据',r.hasMethod?'方法感够':'补可执行步骤'];box.innerHTML=`<h2>预测结果</h2><div class="result-grid"><div class="result-box"><strong>${fmt(r.low)}-${fmt(r.high)}</strong><span>播放区间</span></div><div class="result-box"><strong>${r.score}</strong><span>内容分</span></div><div class="result-box"><strong>${Math.max(8,Math.min(70,Math.round((r.score-45)*1.25)))}%</strong><span>小爆概率</span></div></div><p>${anchor}</p><p>判断：${r.score>=78?'值得拍，但结尾要接清楚下一步行动。':r.score>=65?'可以拍，先加强开头具体痛点和案例证据。':'暂时不建议直接拍，容易变成泛知识。'}</p><p>修改清单：${advice.join(' / ')}</p>`;}
-function fillExample(){document.getElementById('draft').value='装修公司老板做个人 IP 最大的问题，不是不会拍，而是天天把账号当广告位。你讲材料、讲工艺、讲优惠，用户只会继续比价格。更好的内容，应该先把客户最担心的装修风险讲透，再用真实案例证明你能解决，最后给出一个具体判断方法。';runPredict();}
-async function runDeepPredict(){if(!accountData)return;const text=document.getElementById('draft').value.trim();const box=document.getElementById('predictResult');if(text.length<20){box.innerHTML='<h2>模型深度预测</h2><p class="muted">先粘贴一条完整终稿，再调用模型。</p>';return;}box.innerHTML='<h2>模型深度预测</h2><p class="muted">正在调用本机预测网关，通常需要 20-90 秒...</p>';try{const res=await fetch('http://127.0.0.1:8787/predict',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({draft:text})});const data=await res.json();if(!data.ok)throw new Error(data.error||'预测失败');renderDeepResult(data.result);}catch(e){box.innerHTML=`<h2>模型深度预测</h2><p>本机预测网关暂不可用。</p><p class="muted">请先在本机运行：<br>python3 scripts/deep_predict_gateway.py --port 8787</p><p class="muted">错误：${String(e.message||e)}</p>`;}}
-function renderDeepResult(r){const m=r.predicted_metrics||{};const scores=(r.rubric_scores||[]).map(s=>`<div class="result-box"><strong>${s.score}/5</strong><span>${s.name}</span><p>${s.reason||''}</p></div>`).join('');const anchors=(r.matched_anchors||[]).map(a=>`<p>• 《${a.title||'未命名'}》：${fmt(a.views)} 播放。${a.why_similar||''} 可迁移：${a.transferable_pattern||''}</p>`).join('')||'<p>暂无强相似历史样本。</p>';const rewrites=(r.specific_rewrites||[]).map(x=>`<p><b>${x.part||'片段'}</b>：${x.problem||''}<br>建议改成：${x.rewrite||''}</p>`).join('');const box=document.getElementById('predictResult');box.innerHTML=`<h2>模型深度预测</h2><div class="result-grid"><div class="result-box"><strong>${r.verdict||'—'}</strong><span>是否值得拍</span></div><div class="result-box"><strong>${r.confidence||'—'}</strong><span>置信度</span></div><div class="result-box"><strong>${fmt(m.views_low)}-${fmt(m.views_high)}</strong><span>播放区间</span></div></div><p>${r.one_line_reason||''}</p><div class="result-grid"><div class="result-box"><strong>${fmt(m.likes_mid)}</strong><span>点赞中位</span></div><div class="result-box"><strong>${fmt(m.saves_mid)}</strong><span>收藏中位</span></div><div class="result-box"><strong>${fmt(m.shares_mid)}</strong><span>分享中位</span></div></div><h3>维度评分</h3><div class="result-grid">${scores}</div><h3>相似历史样本</h3>${anchors}<h3>强项</h3><p>${(r.strengths||[]).map(x=>'• '+x).join('<br>')}</p><h3>风险</h3><p>${(r.risks||[]).map(x=>'• '+x).join('<br>')}</p><h3>具体修改建议</h3>${rewrites||'<p>暂无。</p>'}<h3>发布决策规则</h3><p>${r.decision_rule||''}</p><p class="muted">说明：这是深度预测结果；引擎：${r.engine==='hermes_model_gateway'?'Hermes 模型调用':'本地结构化降级（模型超时/不可用时兜底）'}。确认终稿后，仍需再锁定为正式 blind prediction。</p>`;}
-function makeTaskCard(){const text=document.getElementById('draft').value.trim();document.getElementById('taskCard').innerHTML=text?`<b>下一步闭环任务卡</b><p>状态：可进入发布前 blind prediction。请确认这就是终稿；确认后写入 scripts/，生成 predictions/ 预测文件。发布后 T+3 回填播放、点赞、评论、收藏、分享。</p>`:`<b>下一步闭环任务卡</b><p>先粘贴一条未发布的新稿，才能生成任务卡。</p>`;}
-document.getElementById('predictBtn').addEventListener('click',runPredict);document.getElementById('deepPredictBtn').addEventListener('click',runDeepPredict);document.getElementById('sampleBtn').addEventListener('click',fillExample);document.getElementById('refreshBtn').addEventListener('click',loadData);document.getElementById('lockBtn').addEventListener('click',makeTaskCard);document.getElementById('draft').addEventListener('input',runPredict);
-loadData().catch(e=>{document.getElementById('sourceNote').textContent='数据加载失败：'+e.message;});
+function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+document.getElementById('queueAddBtn').addEventListener('click',()=>{
+  const inp=document.getElementById('queueInput');const t=inp.value.trim();if(!t)return;
+  queue.unshift({text:t,stage:'今日',ts:new Date().toLocaleString('zh-CN',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'}),done:false});
+  saveQueue(queue);inp.value='';renderQueue();
+});
+document.getElementById('queueInput').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('queueAddBtn').click()});
+renderQueue();
+
+// ---------- 数据加载与渲染 ----------
+async function loadData(){
+  const res=await fetch('data/weiwu-account.json',{cache:'no-store'});
+  accountData=await res.json();
+  renderAll();
+}
+function renderAll(){renderKpi();renderHealth();renderWorks();renderPill();runPredict();}
+
+function renderKpi(){
+  const a=accountData.account,m=accountData.metrics;
+  const items=[
+    ['粉丝',fmtInt(a.follower_count),'抖音主页口径'],
+    ['总获赞',fmtInt(a.total_favorited),'账号快照'],
+    ['已抓作品',fmtInt(accountData.works_total),`主页显示 ${a.aweme_count} 条`],
+    ['历史播放',fmt(m.total_play_count),`均播 ${fmt(m.avg_play_count)} · 最高 ${fmt(m.best_play_count)}`],
+  ];
+  document.getElementById('kpiGrid').innerHTML=items.map(i=>`<div class="kpi"><div class="glow"></div><div class="lbl">${i[0]}</div><div class="val">${i[1]}</div><div class="delta">${i[2]}</div></div>`).join('');
+}
+
+function renderHealth(){
+  const a=accountData.account;
+  const missing=a.missing_works_count||0;
+  const captured=accountData.works_total;
+  const ok=missing===0;
+  const status=ok?'ok':(missing>0?'warn':'bad');
+  const statusTxt=ok?'完整':`缺 ${missing} 条待补`;
+  const capHealth = captured>0 ? 'ok':'bad';
+  document.getElementById('healthBox').innerHTML=`
+    <div class="cell"><div class="k">抓取状态</div><div class="v"><span class="status-tag ${capHealth}">${captured>0?'有效': '空抓取'}</span></div></div>
+    <div class="cell"><div class="k">作品完整性</div><div class="v"><span class="status-tag ${status}">${statusTxt}</span></div></div>
+    <div class="cell"><div class="k">数据更新</div><div class="v" style="font-size:13px">${(accountData.generated_at||'').replace('T',' ')}</div></div>
+    <div class="cell"><div class="k">数据源</div><div class="v" style="font-size:13px">${accountData.source_type||'—'}</div></div>
+    <div class="cell"><div class="k">总互动</div><div class="v">赞 ${fmtInt(accountData.metrics.total_likes)} · 藏 ${fmtInt(accountData.metrics.total_collects)}</div></div>
+    <div class="cell"><div class="k">评论 / 分享</div><div class="v">${fmtInt(accountData.metrics.total_comments)} / ${fmtInt(accountData.metrics.total_shares)}</div></div>`;
+}
+
+function renderPill(){
+  const missing=accountData.account.missing_works_count||0;
+  const captured=accountData.works_total;
+  let cls='',txt='';
+  if(captured===0){cls='bad';txt='数据异常 · 空抓取';}
+  else if(missing>0){cls='warn';txt=`快照有效 · 缺 ${missing} 条待补`;}
+  else{cls='';txt='快照有效 · 数据完整';}
+  const p=document.getElementById('healthPill');
+  p.className='pill '+cls;
+  document.getElementById('healthPillTxt').textContent=txt;
+}
+
+function renderWorks(){
+  const works=(accountData.works||[]).slice().sort((a,b)=>(b.play_count||0)-(a.play_count||0));
+  document.getElementById('worksHint').textContent=`按播放排序 · 共 ${works.length} 条`;
+  if(!works.length){document.getElementById('workList').innerHTML='<div class="empty">暂无作品数据。</div>';return;}
+  document.getElementById('workList').innerHTML=works.map((w,i)=>`
+    <div class="work">
+      <div class="rank ${i<3?'top':''}">${i+1}</div>
+      <div class="meta">
+        <div class="t">${esc(w.title||w.theme||'未命名')}</div>
+        <div class="tags"><span class="chip">${esc(w.theme_category||'其他')}</span><span class="chip angle">${esc(w.content_angle||'')}</span><span class="chip">${(w.published_at||'').slice(0,10)}</span></div>
+      </div>
+      <div class="nums"><div class="play">${fmt(w.play_count)}</div><div class="eng">赞 ${w.digg_count||0} · 评 ${w.comment_count||0} · 藏 ${w.collect_count||0} · 转 ${w.share_count||0}</div></div>
+    </div>`).join('');
+}
+
+// ---------- 预测（保留原有本地估算逻辑，风格化输出） ----------
+const kw=['开工','成品','案例','工地','老板','设计师','业主','同行','咨询','信任','成交','亮点','无脚本','第一视角','拍摄','痛点','方法','服务'];
+const tokens=t=>kw.filter(k=>(t||'').includes(k));
+const similarity=(text,w)=>{const a=tokens(text),b=tokens((w.desc||'')+(w.theme||''));return a.length?a.filter(x=>b.includes(x)).length/a.length:0;};
+function estimate(text){
+  const works=accountData?.works||[];let best=null;
+  works.forEach(w=>{const sim=similarity(text,w);if(!best||sim>best.sim)best={w,sim};});
+  const hasPain=/老板|客户|咨询|信任|成交|痛点|同行/.test(text);
+  const hasProof=/案例|开工|工地|业主|真实|数据|播放|点赞/.test(text);
+  const hasMethod=/怎么|方法|步骤|拆解|框架|逻辑|设计/.test(text);
+  const score=Math.min(92,45+text.length/18+(hasPain?14:0)+(hasProof?12:0)+(hasMethod?9:0)+(best?best.sim*14:0));
+  const base=best?.w?.play_count||accountData.metrics.avg_play_count||1800;
+  const mid=Math.round(base*(score/70)*(0.8+(best?.sim||0)*0.7));
+  return{score:Math.round(score),low:Math.max(300,Math.round(mid*.55)),high:Math.max(800,Math.round(mid*1.75)),best,hasPain,hasProof,hasMethod};
+}
+function runPredict(){
+  if(!accountData)return;
+  const text=document.getElementById('draft').value.trim();
+  const box=document.getElementById('predictResult');
+  if(!text){box.innerHTML='<h3 style="margin-top:0">预测结果</h3><p class="muted">等待输入新稿。</p>';return;}
+  const r=estimate(text);
+  const anchor=r.best?.sim>0?`参考相近作品《${esc(r.best.w.theme.slice(0,26))}…》，播放 ${fmt(r.best.w.play_count)}。`:'没有明显相近作品，只能按结构粗估。';
+  const advice=[r.hasPain?'痛点明确':'补装修老板/设计师的真实问题',r.hasProof?'有证据':'补真实现场/案例/数据',r.hasMethod?'方法感够':'补可执行步骤'];
+  box.innerHTML=`<h3 style="margin-top:0">预测结果</h3>
+    <div class="result-grid">
+      <div class="result-box"><div class="k">${fmt(r.low)}–${fmt(r.high)}</div><div class="l">播放区间</div></div>
+      <div class="result-box"><div class="k">${r.score}</div><div class="l">内容分</div></div>
+      <div class="result-box"><div class="k">${Math.max(8,Math.min(70,Math.round((r.score-45)*1.25)))}%</div><div class="l">小爆概率</div></div>
+    </div>
+    <p class="muted">${anchor}</p>
+    <p>判断：${r.score>=78?'值得拍，结尾接清楚下一步行动。':r.score>=65?'可以拍，先加强开头痛点和案例证据。':'暂时不建议直接拍，容易变成泛知识。'}</p>
+    <p>修改清单：${advice.join(' / ')}</p>`;
+}
+function fillExample(){
+  document.getElementById('draft').value='装修公司老板做个人 IP 最大的问题，不是不会拍，而是天天把账号当广告位。你讲材料、讲工艺、讲优惠，用户只会继续比价格。更好的内容，应该先把客户最担心的装修风险讲透，再用真实案例证明你能解决，最后给出一个具体判断方法。';
+  runPredict();
+}
+async function runDeepPredict(){
+  if(!accountData)return;
+  const text=document.getElementById('draft').value.trim();
+  const box=document.getElementById('predictResult');
+  if(text.length<20){box.innerHTML='<h3 style="margin-top:0">模型深度预测</h3><p class="muted">先粘贴一条完整终稿再调用模型。</p>';return;}
+  box.innerHTML='<h3 style="margin-top:0">模型深度预测</h3><p class="muted">正在调用本机预测网关，通常 20–90 秒…</p>';
+  try{
+    const res=await fetch('http://127.0.0.1:8787/predict',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({draft:text})});
+    const data=await res.json();
+    if(!data.ok)throw new Error(data.error||'预测失败');
+    renderDeepResult(data.result);
+  }catch(e){
+    box.innerHTML=`<h3 style="margin-top:0">模型深度预测</h3><p>本机预测网关暂不可用。</p><p class="muted">请先在本机运行：<br><span style="font-family:var(--mono)">python3 scripts/deep_predict_gateway.py --port 8787</span></p><p class="muted">错误：${esc(String(e.message||e))}</p>`;
+  }
+}
+function renderDeepResult(r){
+  const m=r.predicted_metrics||{};
+  const scores=(r.rubric_scores||[]).map(s=>`<div class="result-box"><div class="k">${s.score}/5</div><div class="l">${esc(s.name)}</div><p class="muted" style="font-size:12px">${esc(s.reason||'')}</p></div>`).join('');
+  const anchors=(r.matched_anchors||[]).map(a=>`<p class="muted" style="font-size:13px">• 《${esc(a.title||'未命名')}》 ${fmt(a.views)} 播放 · ${esc(a.why_similar||'')} 可迁移：${esc(a.transferable_pattern||'')}</p>`).join('')||'<p class="muted">暂无强相似历史样本。</p>';
+  const rewrites=(r.specific_rewrites||[]).map(x=>`<p style="font-size:13px"><b>${esc(x.part||'片段')}</b>：${esc(x.problem||'')}<br>建议改成：${esc(x.rewrite||'')}</p>`).join('');
+  document.getElementById('predictResult').innerHTML=`<h3 style="margin-top:0">模型深度预测</h3>
+    <div class="result-grid">
+      <div class="result-box"><div class="k">${esc(r.verdict||'—')}</div><div class="l">是否值得拍</div></div>
+      <div class="result-box"><div class="k">${esc(r.confidence||'—')}</div><div class="l">置信度</div></div>
+      <div class="result-box"><div class="k">${fmt(m.views_low)}–${fmt(m.views_high)}</div><div class="l">播放区间</div></div>
+    </div>
+    <p class="muted">${esc(r.one_line_reason||'')}</p>
+    <div class="result-grid">
+      <div class="result-box"><div class="k">${fmt(m.likes_mid)}</div><div class="l">点赞中位</div></div>
+      <div class="result-box"><div class="k">${fmt(m.saves_mid)}</div><div class="l">收藏中位</div></div>
+      <div class="result-box"><div class="k">${fmt(m.shares_mid)}</div><div class="l">分享中位</div></div>
+    </div>
+    <h3>维度评分</h3><div class="result-grid">${scores}</div>
+    <h3>相似历史样本</h3>${anchors}
+    <h3>强项</h3><p class="muted">${(r.strengths||[]).map(x=>'• '+esc(x)).join('<br>')}</p>
+    <h3>风险</h3><p class="muted">${(r.risks||[]).map(x=>'• '+esc(x)).join('<br>')}</p>
+    <h3>具体修改建议</h3>${rewrites||'<p class="muted">暂无。</p>'}
+    <h3>发布决策规则</h3><p class="muted">${esc(r.decision_rule||'')}</p>
+    <p class="note">引擎：${r.engine==='hermes_model_gateway'?'Hermes 模型调用':'本地结构化降级'}。确认终稿后仍需锁定为正式 blind prediction。</p>`;
+}
+function makeTaskCard(){
+  const text=document.getElementById('draft').value.trim();
+  document.getElementById('taskCard').innerHTML=text
+    ?`<b>下一步闭环任务卡</b><p class="muted">状态：可进入发布前 blind prediction。确认这就是终稿后写入 scripts/ 生成 predictions/ 预测文件；发布后 T+3 回填播放、点赞、评论、收藏、分享。</p>`
+    :`<b>下一步闭环任务卡</b><p class="muted">先粘贴一条未发布的新稿，才能生成任务卡。</p>`;
+}
+document.getElementById('predictBtn').addEventListener('click',runPredict);
+document.getElementById('deepPredictBtn').addEventListener('click',runDeepPredict);
+document.getElementById('sampleBtn').addEventListener('click',fillExample);
+document.getElementById('lockBtn').addEventListener('click',makeTaskCard);
+document.getElementById('draft').addEventListener('input',runPredict);
+
+loadData().catch(e=>{
+  document.getElementById('healthPillTxt').textContent='数据加载失败';
+  document.getElementById('healthPill').className='pill bad';
+  document.getElementById('kpiGrid').innerHTML=`<div class="empty" style="grid-column:1/-1">数据加载失败：${esc(e.message)}</div>`;
+});
 </script>
 </body>
 </html>
